@@ -1,9 +1,9 @@
 package edu.neumont.csc150.sudoku.view;
 
-import edu.neumont.csc150.sudoku.view.SodukoView;
+import edu.neumont.csc150.sudoku.view.SudokuView;
 import javafx.stage.Stage;
 
-public class SodukoViewController implements SodukoView{
+public class SudokuViewController implements SudokuView{
 	
 	private Stage stage;
 
@@ -13,7 +13,7 @@ public class SodukoViewController implements SodukoView{
 
 	@Override
 	public void init() {
-		stage.setTitle("Soduko");
+		stage.setTitle("Sudoku");
 		stage.setMaximized(true);
 		stage.show();
 	}

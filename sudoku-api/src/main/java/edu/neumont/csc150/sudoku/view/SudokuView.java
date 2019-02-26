@@ -1,6 +1,6 @@
 package edu.neumont.csc150.sudoku.view;
 
-public interface SodukoView {
+public interface SudokuView {
 
 	void init();
 
