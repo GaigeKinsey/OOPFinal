@@ -1,6 +1,6 @@
-package edu.neumont.csc150.soduko.controller;
+package edu.neumont.csc150.sudoku.controller;
 
-import edu.neumont.csc150.soduko.view.SodukoView;
+import edu.neumont.csc150.sudoku.view.SodukoView;
 
 public class SodukoController {
 	

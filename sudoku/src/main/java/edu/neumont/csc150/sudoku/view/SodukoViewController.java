@@ -1,5 +1,6 @@
-package edu.neumont.csc150.soduko.view;
+package edu.neumont.csc150.sudoku.view;
 
+import edu.neumont.csc150.sudoku.view.SodukoView;
 import javafx.stage.Stage;
 
 public class SodukoViewController implements SodukoView{

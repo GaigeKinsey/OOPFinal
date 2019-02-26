@@ -1,9 +1,9 @@
-package edu.neumont.csc150.soduko;
+package edu.neumont.csc150.sudoku;
 
 import java.net.URL;
 
-import edu.neumont.csc150.soduko.controller.SodukoController;
-import edu.neumont.csc150.soduko.view.SodukoViewController;
+import edu.neumont.csc150.sudoku.controller.SodukoController;
+import edu.neumont.csc150.sudoku.view.SodukoViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

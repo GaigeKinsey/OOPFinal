@@ -1,4 +1,4 @@
-package edu.neumont.csc150.soduko.view;
+package edu.neumont.csc150.sudoku.view;
 
 public interface SodukoView {
 

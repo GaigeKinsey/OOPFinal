@@ -2,7 +2,7 @@
 
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.neumont.csc150.soduko.view.SodukoViewController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.neumont.csc150.sudoku.view.SodukoViewController">
 	<!-- TODO Add Nodes -->
 </BorderPane>
 
