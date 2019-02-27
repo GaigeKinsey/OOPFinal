@@ -12,7 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class SudokuViewController implements SudokuView {
-	
+
 	private static SudokuViewController instance;
 	private SudokuController controller;
 
@@ -24,7 +24,7 @@ public class SudokuViewController implements SudokuView {
 	public SudokuViewController() {
 		setInstance(this);
 	}
-	
+
 	public void setStage(Stage stage) {
 		this.stage = stage;
 	}
@@ -32,7 +32,7 @@ public class SudokuViewController implements SudokuView {
 	public Stage getStage() {
 		return stage;
 	}
-	
+
 	public void registerController(SudokuController controller) {
 		this.controller = controller;
 	}
@@ -41,11 +41,8 @@ public class SudokuViewController implements SudokuView {
 	public void init() throws IOException {
 		this.stage.setTitle("Sudoku");
 		this.stage.setResizable(false);
-		this.stage.setMinWidth(1280);
-		this.stage.setMinHeight(720);
-		initMainMenu();
-		initDifficulty();
-		initGame();
+		this.stage.setWidth(1280);
+		this.stage.setHeight(720);
 		showMainMenu();
 	}
 
@@ -72,16 +69,19 @@ public class SudokuViewController implements SudokuView {
 	}
 
 	public void showMainMenu() throws IOException {
-		stage.setScene(mainMenuScene);
-		stage.show();
+		initMainMenu();
+		this.stage.setScene(mainMenuScene);
+		this.stage.show();
 	}
 
-	public void showDifficulty() {
+	public void showDifficulty() throws IOException {
+		initDifficulty();
 		this.stage.setScene(difficultyScene);
 		this.stage.show();
 	}
 
-	public void showGame() {
+	public void showGame() throws IOException {
+		initGame();
 		this.stage.setScene(gameScene);
 		this.stage.show();
 	}
@@ -90,7 +90,7 @@ public class SudokuViewController implements SudokuView {
 		shutdown();
 	}
 
-	public void onNewGame(MouseEvent e) {
+	public void onNewGame(MouseEvent e) throws IOException {
 		showDifficulty();
 	}
 
