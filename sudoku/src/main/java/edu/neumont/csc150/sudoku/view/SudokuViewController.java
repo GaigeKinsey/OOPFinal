@@ -3,6 +3,7 @@ package edu.neumont.csc150.sudoku.view;
 import java.io.IOException;
 import java.net.URL;
 
+import edu.neumont.csc150.sudoku.controller.SudokuController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,12 +12,19 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class SudokuViewController implements SudokuView {
+	
+	private static SudokuViewController instance;
+	private SudokuController controller;
 
 	private Stage stage;
 	private Scene mainMenuScene;
 	private Scene difficultyScene;
 	private Scene gameScene;
 
+	public SudokuViewController() {
+		setInstance(this);
+	}
+	
 	public void setStage(Stage stage) {
 		this.stage = stage;
 	}
@@ -24,12 +32,17 @@ public class SudokuViewController implements SudokuView {
 	public Stage getStage() {
 		return stage;
 	}
+	
+	public void registerController(SudokuController controller) {
+		this.controller = controller;
+	}
 
 	@Override
 	public void init() throws IOException {
-		stage.setTitle("Sudoku");
-		stage.setResizable(false);
-		stage.setMaximized(true);
+		this.stage.setTitle("Sudoku");
+		this.stage.setResizable(false);
+		this.stage.setMinWidth(1280);
+		this.stage.setMinHeight(720);
 		initMainMenu();
 		initDifficulty();
 		initGame();
@@ -64,7 +77,6 @@ public class SudokuViewController implements SudokuView {
 	}
 
 	public void showDifficulty() {
-		this.stage.hide();
 		this.stage.setScene(difficultyScene);
 		this.stage.show();
 	}
@@ -88,5 +100,13 @@ public class SudokuViewController implements SudokuView {
 
 	public void shutdown() {
 		stage.close();
+	}
+
+	public static SudokuViewController getInstance() {
+		return instance;
+	}
+
+	public static void setInstance(SudokuViewController instance) {
+		SudokuViewController.instance = instance;
 	}
 }

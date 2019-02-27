@@ -10,6 +10,7 @@ public class SudokuController {
 
 	public SudokuController(SudokuView viewController) {
 		this.view = viewController;
+		this.view.registerController(this);
 	}
 
 	public void run() throws IOException {

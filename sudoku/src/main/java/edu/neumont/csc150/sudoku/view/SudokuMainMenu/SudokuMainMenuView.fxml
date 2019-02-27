@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="edu.neumont.csc150.sudoku.view.SudokuViewController">
+	fx:controller="edu.neumont.csc150.sudoku.view.sudokumainmenu.SudokuMainMenuViewController">
 
 	<top>
 		<MenuBar>
