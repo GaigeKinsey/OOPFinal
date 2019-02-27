@@ -1,5 +1,7 @@
 package edu.neumont.csc150.sudoku.controller;
 
+import java.io.IOException;
+
 import edu.neumont.csc150.sudoku.view.SudokuView;
 
 public class SudokuController {
@@ -10,7 +12,7 @@ public class SudokuController {
 		this.view = viewController;
 	}
 
-	public void run() {
+	public void run() throws IOException {
 		view.init();
 	}
 

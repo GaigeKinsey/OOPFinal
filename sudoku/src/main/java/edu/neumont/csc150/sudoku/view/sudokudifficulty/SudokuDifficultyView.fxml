@@ -17,11 +17,12 @@
 			</Menu>
 		</MenuBar>
 	</top>
-	
+
 	<center>
 		<VBox>
-		<Label onMouseClicked="#onNewGame">New Game</Label>
-		<Label onMouseClicked="#onLoadGame">Load Game</Label>
+			<Label>Easy</Label>
+			<Label>Medium</Label>
+			<Label>Hard</Label>
 		</VBox>
 	</center>
 
