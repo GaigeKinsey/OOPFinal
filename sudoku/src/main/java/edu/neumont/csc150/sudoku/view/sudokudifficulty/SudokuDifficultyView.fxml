@@ -2,28 +2,18 @@
 
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="edu.neumont.csc150.sudoku.view.sudokudifficulty.SudokuDifficultyViewController">
-
-	<top>
-		<MenuBar>
-			<Menu text="test">
-				<MenuItem text="test" onAction="#click"></MenuItem>
-			</Menu>
-		</MenuBar>
-	</top>
+	fx:controller="edu.neumont.csc150.sudoku.view.sudokudifficulty.SudokuDifficultyViewController"
+	stylesheets="@SudokuDifficultyView.css">
 
 	<center>
-		<VBox>
-			<Label>Easy</Label>
-			<Label>Medium</Label>
-			<Label>Hard</Label>
-		</VBox>
+		<HBox>
+			<Label onMouseClicked="#onEasy" fx:id="easy">Easy</Label>
+			<Label onMouseClicked="#onMedium" fx:id='medium'>Medium</Label>
+			<Label onMouseClicked="#onHard" fx:id='hard'>Hard</Label>
+		</HBox>
 	</center>
 
 </BorderPane>

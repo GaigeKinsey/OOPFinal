@@ -1,0 +1,12 @@
+Label{
+	-fx-font-size: 20pt;
+	-fx-label-padding: 20px;
+	-fx-border-color: black;
+    -fx-border-insets: 10;
+    -fx-border-width: 3;
+    -fx-border-style: solid;
+}
+
+HBox{
+	-fx-alignment: center;
+}

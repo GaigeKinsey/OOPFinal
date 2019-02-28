@@ -3,6 +3,7 @@ package edu.neumont.csc150.sudoku;
 import edu.neumont.csc150.sudoku.controller.SudokuController;
 import edu.neumont.csc150.sudoku.view.SudokuViewController;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 
 public class Sudoku extends Application{

@@ -50,6 +50,7 @@ public class SudokuViewController implements SudokuView {
 		URL location = getClass().getResource("/edu/neumont/csc150/sudoku/view/sudokumainmenu/SudokuMainMenuView.fxml");
 		FXMLLoader loader = new FXMLLoader(location);
 		Parent root = loader.load();
+		
 		mainMenuScene = new Scene(root);
 	}
 

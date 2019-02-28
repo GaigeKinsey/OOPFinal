@@ -18,4 +18,8 @@ public class SudokuMainMenuViewController {
 	public void onLoadGame(MouseEvent e) {
 
 	}
+	
+	public void onExit(MouseEvent e) {
+		
+	}
 }
