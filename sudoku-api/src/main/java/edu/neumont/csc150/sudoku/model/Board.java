@@ -1,7 +1,5 @@
 package edu.neumont.csc150.sudoku.model;
 
-import java.sql.RowIdLifetime;
-
 public class Board {
 
 	private final int BOARDWIDTH = 9, BOARDHEIGHT = 9;
