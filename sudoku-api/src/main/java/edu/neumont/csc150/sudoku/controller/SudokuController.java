@@ -49,11 +49,8 @@ public class SudokuController {
 					intVals[x][y] = squares[x][y].getValue();
 				}
 			}
-			System.out.println("new board");
 			checkBoard(intVals, board.getSquares().length);
-			System.out.println(solutions);
 		} while (solutions != 1);
-		System.out.println("Done");
 	}
 
 	private void generateBoard(String difficulty) {
@@ -118,7 +115,6 @@ public class SudokuController {
 
 		// If no empty space found, board is filled, count up one solution, and clear
 		if (!empty) {
-			System.out.println("filled");
 			solutions++;
 			return false;
 		}
