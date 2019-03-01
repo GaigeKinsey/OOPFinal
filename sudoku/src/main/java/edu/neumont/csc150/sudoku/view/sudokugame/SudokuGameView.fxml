@@ -7,6 +7,8 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioMenuItem?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.GridPane?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="edu.neumont.csc150.sudoku.view.sudokugame.SudokuGameViewController"
@@ -21,7 +23,7 @@
 		<MenuBar>
 			<Menu text="Game">
 				<MenuItem text="Save" onAction="#onSave"></MenuItem>
-				<MenuItem text="Restart" onAction="#onRestart"></MenuItem>
+				<MenuItem text="Clear Board" onAction="#onClear"></MenuItem>
 				<MenuItem text="New Puzzle" onAction="#onNewPuzzle"></MenuItem>	
 				<MenuItem text="Exit" onAction="#onExit"></MenuItem>
 			</Menu>
@@ -30,6 +32,12 @@
 			</Menu>
 		</MenuBar>
 	</top>
+	
+	<center>
+		<HBox>
+			<GridPane fx:id="sudokuBoard"></GridPane>
+		</HBox>
+	</center>
 
 </BorderPane>
 

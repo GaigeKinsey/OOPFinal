@@ -60,7 +60,7 @@ public class SudokuViewController implements SudokuView {
 		FXMLLoader loader = new FXMLLoader(location);
 		Parent root = loader.load();
 		SudokuDifficultyViewController difficulty = loader.getController();
-		difficulty.init(this);
+		difficulty.init(this, controller);
 		
 		difficultyScene = new Scene(root);
 	}
@@ -70,7 +70,7 @@ public class SudokuViewController implements SudokuView {
 		FXMLLoader loader = new FXMLLoader(location);
 		Parent root = loader.load();
 		SudokuGameViewController game = loader.getController();
-		game.init(this);
+		game.init(this, controller);
 		
 		gameScene = new Scene(root);
 	}
