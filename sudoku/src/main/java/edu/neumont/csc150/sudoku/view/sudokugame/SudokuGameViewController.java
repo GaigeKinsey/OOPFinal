@@ -53,7 +53,7 @@ public class SudokuGameViewController {
 				cell.pseudoClassStateChanged(right, col == 2 || col == 5);
 				cell.pseudoClassStateChanged(bottom, row == 2 || row == 5);
 				
-				this.cells.put(col + "x" + row, cell);
+				this.cells.put("" + col + "x" + row, cell);
 				this.sudokuBoard.add(cell, col, row);
 			}
 		}
@@ -63,7 +63,7 @@ public class SudokuGameViewController {
 	public void displayBoard() {
 		for(int col=0; col<9; col++) {
 			for(int row=0; row<9; row++) {
-				Label cell = cells.get(col + "x" + row);
+				Label cell = cells.get("" + col + "x" + row);
 				cell.setText("" + controller.getBoard().getSquares()[col][row].getValue());
 				cell.layout();
 			}
