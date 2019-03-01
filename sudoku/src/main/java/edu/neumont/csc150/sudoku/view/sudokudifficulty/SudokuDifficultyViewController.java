@@ -17,16 +17,22 @@ public class SudokuDifficultyViewController {
 	}
 	
 	public void onEasy(MouseEvent e) throws IOException {
+		//loading screen scene needed
+		mainView.showLoad();
 		controller.makeBoard("Easy");
 		mainView.showGame();
 	}
 	
 	public void onMedium(MouseEvent e) throws IOException {
+		//loading screen scene needed
+		mainView.showLoad();
 		controller.makeBoard("Medium");
 		mainView.showGame();
 	}
 	
 	public void onHard(MouseEvent e) throws IOException {
+		//loading screen scene needed
+		mainView.showLoad();
 		controller.makeBoard("Hard");
 		mainView.showGame();
 	}
