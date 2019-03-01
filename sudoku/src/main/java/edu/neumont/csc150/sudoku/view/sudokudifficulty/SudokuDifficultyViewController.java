@@ -9,8 +9,8 @@ import javafx.scene.input.MouseEvent;
 
 public class SudokuDifficultyViewController {
 	
-	SudokuViewController mainView;
-	SudokuController controller;
+	private SudokuViewController mainView;
+	private SudokuController controller;
 	
 	public void click(ActionEvent e) {
 		mainView.click(e);
@@ -22,7 +22,7 @@ public class SudokuDifficultyViewController {
 	}
 	
 	public void onMedium(MouseEvent e) throws IOException {
-//		controller.makeBoard("Medium");
+		controller.makeBoard("Medium");
 		mainView.showGame();
 	}
 	

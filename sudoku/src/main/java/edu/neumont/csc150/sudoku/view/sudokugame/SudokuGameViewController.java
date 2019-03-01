@@ -1,5 +1,8 @@
 package edu.neumont.csc150.sudoku.view.sudokugame;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import edu.neumont.csc150.sudoku.controller.SudokuController;
 import edu.neumont.csc150.sudoku.view.SudokuViewController;
 import javafx.css.PseudoClass;
@@ -10,8 +13,10 @@ import javafx.scene.layout.GridPane;
 
 public class SudokuGameViewController {
 	
-	SudokuViewController mainView;
-	SudokuController controller;
+	private SudokuViewController mainView;
+	private SudokuController controller;
+	
+	private Map<String, Label> cells = new HashMap<>();
 	
 	@FXML
 	private GridPane sudokuBoard;
@@ -48,13 +53,21 @@ public class SudokuGameViewController {
 				cell.pseudoClassStateChanged(right, col == 2 || col == 5);
 				cell.pseudoClassStateChanged(bottom, row == 2 || row == 5);
 				
+				this.cells.put(col + "x" + row, cell);
 				this.sudokuBoard.add(cell, col, row);
 			}
 		}
+		displayBoard();
 	}
 	
 	public void displayBoard() {
-		
+		for(int col=0; col<9; col++) {
+			for(int row=0; row<9; row++) {
+				Label cell = cells.get(col + "x" + row);
+				cell.setText("" + controller.getBoard().getSquares()[col][row].getValue());
+				cell.layout();
+			}
+		}
 	}
 
 	public void init(SudokuViewController sudokuViewController, SudokuController controller) {
