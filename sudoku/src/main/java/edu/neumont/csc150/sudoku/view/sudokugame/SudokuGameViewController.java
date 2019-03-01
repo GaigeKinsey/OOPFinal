@@ -38,7 +38,7 @@ public class SudokuGameViewController {
 	}
 	
 	public void onExit(ActionEvent e) {
-		
+		mainView.shutdown();
 	}
 	
 	public void drawBoard() {

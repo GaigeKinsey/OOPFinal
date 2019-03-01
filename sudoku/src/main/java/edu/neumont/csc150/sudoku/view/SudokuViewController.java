@@ -6,6 +6,7 @@ import java.net.URL;
 import edu.neumont.csc150.sudoku.controller.SudokuController;
 import edu.neumont.csc150.sudoku.view.sudokudifficulty.SudokuDifficultyViewController;
 import edu.neumont.csc150.sudoku.view.sudokugame.SudokuGameViewController;
+import edu.neumont.csc150.sudoku.view.sudokuloading.SudokuLoadingScreenViewController;
 import edu.neumont.csc150.sudoku.view.sudokumainmenu.SudokuMainMenuViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +23,7 @@ public class SudokuViewController implements SudokuView {
 	private Scene mainMenuScene;
 	private Scene difficultyScene;
 	private Scene gameScene;
+	private Scene loadScreenScene;
 
 	public void setStage(Stage stage) {
 		this.stage = stage;
@@ -74,6 +76,16 @@ public class SudokuViewController implements SudokuView {
 		
 		gameScene = new Scene(root);
 	}
+	
+	private void initLoadScreen() throws IOException {
+		URL location = getClass().getResource("/edu/neumont/csc150/sudoku/view/sudokuloading/SudokuLoadingScreenView.fxml");
+		FXMLLoader loader = new FXMLLoader(location);
+		Parent root = loader.load();
+//		SudokuLoadingScreenViewController loadScreen = loader.getController();
+//		loadScreen.init(this, controller);
+		
+		loadScreenScene = new Scene(root);
+	}
 
 	public void showMainMenu() throws IOException {
 		initMainMenu();
@@ -90,6 +102,12 @@ public class SudokuViewController implements SudokuView {
 	public void showGame() throws IOException {
 		initGame();
 		this.stage.setScene(gameScene);
+		this.stage.show();
+	}
+	
+	public void showLoad() throws IOException {
+		initLoadScreen();
+		this.stage.setScene(loadScreenScene);
 		this.stage.show();
 	}
 
