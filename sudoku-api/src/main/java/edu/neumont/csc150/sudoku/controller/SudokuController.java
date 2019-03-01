@@ -13,7 +13,7 @@ public class SudokuController {
 
 	private Board board;
 
-	private int solutions;
+	private int solutions = 0;
 
 	public SudokuController(SudokuView viewController) {
 		this.view = viewController;
@@ -51,6 +51,7 @@ public class SudokuController {
 			}
 			System.out.println("new board");
 			checkBoard(intVals, board.getSquares().length);
+			System.out.println(solutions);
 		} while (solutions != 1);
 		System.out.println("Done");
 	}
@@ -59,13 +60,13 @@ public class SudokuController {
 		int hints = 0;
 		switch (difficulty) {
 		case "Easy":
-			hints = 34;
+			hints = 38;
 			break;
 		case "Medium":
-			hints = 30;
+			hints = 34;
 			break;
 		case "Hard":
-			hints = 26;
+			hints = 30;
 			break;
 		}
 
@@ -110,12 +111,16 @@ public class SudokuController {
 			}
 		}
 
-		// If no empty space found, board is filled, count up one solution, and clear
 		// space, if more than one solution then board is not unique
-		if (!empty) {
-			solutions++;
-			System.out.println(solutions);
+		if (solutions > 1) {
 			return true;
+		}
+
+		// If no empty space found, board is filled, count up one solution, and clear
+		if (!empty) {
+			System.out.println("filled");
+			solutions++;
+			return false;
 		}
 
 		// If there was an empty space, fill it
@@ -124,7 +129,7 @@ public class SudokuController {
 			if (spotValid(board, col, row, num)) {
 				board[col][row] = num;
 				// Loop again for the next empty space if there isn't more than 1 solution found
-				if (solutions <= 1 && checkBoard(board, boardSize)) {
+				if (checkBoard(board, boardSize)) {
 					return true;
 				} else {
 					// replace this spot to backtrack
@@ -141,46 +146,42 @@ public class SudokuController {
 		}
 		return true;
 	}
-	
+
 	private boolean checkCol(int[][] intBoard, int col, int num) {
-		boolean matching = false;
 		for (int row = 0; row < intBoard.length; row++) {
 			if (num == intBoard[col][row]) {
-				matching = true;
+				return true;
 			}
 		}
-		return matching;
+		return false;
 	}
-	
+
 	private boolean checkRow(int[][] intBoard, int row, int num) {
-		boolean matching = false;
 		for (int col = 0; col < intBoard.length; col++) {
 			if (num == intBoard[col][row]) {
-				matching = true;
+				return true;
 			}
 		}
-		return matching;
+		return false;
 	}
-	
+
 	private boolean checkRegion(int[][] intBoard, int col, int row, int num) {
 		int colStart = col - col % 3;
 		int rowStart = row - row % 3;
-		
+
 		int currentRow;
-		
-		boolean matching = false;
-		
+
 		for (int colLoops = 0; colLoops < 3; colLoops++) {
 			currentRow = rowStart;
 			for (int rowLoops = 0; rowLoops < 3; rowLoops++) {
 				if (num == intBoard[colStart][currentRow]) {
-					matching = true;
+					return true;
 				}
 				currentRow++;
 			}
 			colStart++;
 		}
-		return matching;
+		return false;
 	}
 
 	public Board getBoard() {
