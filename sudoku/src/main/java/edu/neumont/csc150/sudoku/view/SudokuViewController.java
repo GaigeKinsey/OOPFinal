@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.net.URL;
 
 import edu.neumont.csc150.sudoku.controller.SudokuController;
+import edu.neumont.csc150.sudoku.view.sudokudifficulty.SudokuDifficultyViewController;
+import edu.neumont.csc150.sudoku.view.sudokugame.SudokuGameViewController;
+import edu.neumont.csc150.sudoku.view.sudokumainmenu.SudokuMainMenuViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,17 +16,12 @@ import javafx.stage.Stage;
 
 public class SudokuViewController implements SudokuView {
 
-	private static SudokuViewController instance;
 	private SudokuController controller;
 
 	private Stage stage;
 	private Scene mainMenuScene;
 	private Scene difficultyScene;
 	private Scene gameScene;
-
-	public SudokuViewController() {
-		setInstance(this);
-	}
 
 	public void setStage(Stage stage) {
 		this.stage = stage;
@@ -50,6 +48,8 @@ public class SudokuViewController implements SudokuView {
 		URL location = getClass().getResource("/edu/neumont/csc150/sudoku/view/sudokumainmenu/SudokuMainMenuView.fxml");
 		FXMLLoader loader = new FXMLLoader(location);
 		Parent root = loader.load();
+		SudokuMainMenuViewController mainMenu = loader.getController();
+		mainMenu.init(this);
 		
 		mainMenuScene = new Scene(root);
 	}
@@ -59,6 +59,9 @@ public class SudokuViewController implements SudokuView {
 				.getResource("/edu/neumont/csc150/sudoku/view/sudokudifficulty/SudokuDifficultyView.fxml");
 		FXMLLoader loader = new FXMLLoader(location);
 		Parent root = loader.load();
+		SudokuDifficultyViewController dificulty = loader.getController();
+		dificulty.init(this);
+		
 		difficultyScene = new Scene(root);
 	}
 
@@ -66,6 +69,9 @@ public class SudokuViewController implements SudokuView {
 		URL location = getClass().getResource("/edu/neumont/csc150/sudoku/view/sudokugame/SudokuGameView.fxml");
 		FXMLLoader loader = new FXMLLoader(location);
 		Parent root = loader.load();
+		SudokuGameViewController game = loader.getController();
+		game.init(this);
+		
 		gameScene = new Scene(root);
 	}
 
@@ -101,13 +107,5 @@ public class SudokuViewController implements SudokuView {
 
 	public void shutdown() {
 		stage.close();
-	}
-
-	public static SudokuViewController getInstance() {
-		return instance;
-	}
-
-	public static void setInstance(SudokuViewController instance) {
-		SudokuViewController.instance = instance;
 	}
 }

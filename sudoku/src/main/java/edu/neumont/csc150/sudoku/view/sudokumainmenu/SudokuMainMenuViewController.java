@@ -7,12 +7,15 @@ import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 
 public class SudokuMainMenuViewController {
+	
+	SudokuViewController mainView;
+	
 	public void click(ActionEvent e) {
-		SudokuViewController.getInstance().click(e);
+		mainView.click(e);
 	}
 
 	public void onNewGame(MouseEvent e) throws IOException {
-		SudokuViewController.getInstance().showDifficulty();
+		mainView.showDifficulty();
 	}
 
 	public void onLoadGame(MouseEvent e) {
@@ -21,5 +24,9 @@ public class SudokuMainMenuViewController {
 	
 	public void onExit(MouseEvent e) {
 		
+	}
+
+	public void init(SudokuViewController sudokuViewController) {
+		mainView = sudokuViewController;
 	}
 }

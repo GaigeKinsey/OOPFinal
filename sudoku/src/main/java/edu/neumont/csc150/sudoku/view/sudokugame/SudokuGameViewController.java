@@ -4,8 +4,11 @@ import edu.neumont.csc150.sudoku.view.SudokuViewController;
 import javafx.event.ActionEvent;
 
 public class SudokuGameViewController {
+	
+	SudokuViewController mainView;
+	
 	public void click(ActionEvent e) {
-		SudokuViewController.getInstance().click(e);
+		mainView.click(e);
 	}
 	
 	public void onSave(ActionEvent e) {
@@ -22,5 +25,9 @@ public class SudokuGameViewController {
 	
 	public void onExit(ActionEvent e) {
 		
+	}
+
+	public void init(SudokuViewController sudokuViewController) {
+		mainView = sudokuViewController;
 	}
 }

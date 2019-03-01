@@ -7,20 +7,27 @@ import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 
 public class SudokuDifficultyViewController {
+	
+	SudokuViewController mainView;
+	
 	public void click(ActionEvent e) {
-		SudokuViewController.getInstance().click(e);
+		mainView.click(e);
 	}
 	
 	public void onEasy(MouseEvent e) throws IOException {
-		SudokuViewController.getInstance().showGame();
+		mainView.showGame();
 	}
 	
 	public void onMedium(MouseEvent e) throws IOException {
-		SudokuViewController.getInstance().showGame();
+		mainView.showGame();
 	}
 	
 	public void onHard(MouseEvent e) throws IOException {
-		SudokuViewController.getInstance().showGame();
+		mainView.showGame();
+	}
+
+	public void init(SudokuViewController sudokuViewController) {
+		mainView = sudokuViewController;
 	}
 	
 }
