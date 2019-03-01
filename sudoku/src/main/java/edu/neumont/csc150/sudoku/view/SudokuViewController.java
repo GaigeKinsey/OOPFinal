@@ -59,8 +59,8 @@ public class SudokuViewController implements SudokuView {
 				.getResource("/edu/neumont/csc150/sudoku/view/sudokudifficulty/SudokuDifficultyView.fxml");
 		FXMLLoader loader = new FXMLLoader(location);
 		Parent root = loader.load();
-		SudokuDifficultyViewController dificulty = loader.getController();
-		dificulty.init(this);
+		SudokuDifficultyViewController difficulty = loader.getController();
+		difficulty.init(this);
 		
 		difficultyScene = new Scene(root);
 	}
