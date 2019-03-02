@@ -1,6 +1,5 @@
 package edu.neumont.csc150.sudoku.controller;
 
-import java.io.IOException;
 import java.util.Random;
 
 import edu.neumont.csc150.sudoku.model.Board;
@@ -21,7 +20,7 @@ public class SudokuController {
 		this.view.registerController(this);
 	}
 
-	public void run() throws IOException {
+	public void run() {
 		view.init();
 	}
 
@@ -52,7 +51,6 @@ public class SudokuController {
 			}
 			checkBoard(intVals, board.getSquares().length);
 		} while (solutions != 1);
-		
 	}
 
 	private void generateBoard(String difficulty) {
