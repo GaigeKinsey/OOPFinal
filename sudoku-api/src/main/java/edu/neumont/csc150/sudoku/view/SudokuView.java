@@ -10,4 +10,6 @@ public interface SudokuView {
 
 	void registerController(SudokuController sudokuController);
 
+	void showGame() throws IOException;
+
 }

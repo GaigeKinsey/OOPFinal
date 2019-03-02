@@ -6,7 +6,6 @@ import java.net.URL;
 import edu.neumont.csc150.sudoku.controller.SudokuController;
 import edu.neumont.csc150.sudoku.view.sudokudifficulty.SudokuDifficultyViewController;
 import edu.neumont.csc150.sudoku.view.sudokugame.SudokuGameViewController;
-import edu.neumont.csc150.sudoku.view.sudokuloading.SudokuLoadingScreenViewController;
 import edu.neumont.csc150.sudoku.view.sudokumainmenu.SudokuMainMenuViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -38,7 +37,7 @@ public class SudokuViewController implements SudokuView {
 	}
 
 	@Override
-	public void init() throws IOException {
+	public void init() {
 		this.stage.setTitle("Sudoku");
 		this.stage.setResizable(false);
 		this.stage.setWidth(1280);
@@ -46,66 +45,80 @@ public class SudokuViewController implements SudokuView {
 		showMainMenu();
 	}
 
-	private void initMainMenu() throws IOException {
+	private void initMainMenu() {
 		URL location = getClass().getResource("/edu/neumont/csc150/sudoku/view/sudokumainmenu/SudokuMainMenuView.fxml");
 		FXMLLoader loader = new FXMLLoader(location);
-		Parent root = loader.load();
+		Parent root = null;
+		try {
+			root = loader.load();
+		} catch (IOException e) {
+		}
 		SudokuMainMenuViewController mainMenu = loader.getController();
 		mainMenu.init(this);
 		
 		mainMenuScene = new Scene(root);
 	}
 
-	private void initDifficulty() throws IOException {
+	private void initDifficulty() {
 		URL location = getClass()
 				.getResource("/edu/neumont/csc150/sudoku/view/sudokudifficulty/SudokuDifficultyView.fxml");
 		FXMLLoader loader = new FXMLLoader(location);
-		Parent root = loader.load();
+		Parent root = null;
+		try {
+			root = loader.load();
+		} catch (IOException e) {
+		}
 		SudokuDifficultyViewController difficulty = loader.getController();
 		difficulty.init(this, controller);
 		
 		difficultyScene = new Scene(root);
 	}
 
-	private void initGame() throws IOException {
+	private void initGame() {
 		URL location = getClass().getResource("/edu/neumont/csc150/sudoku/view/sudokugame/SudokuGameView.fxml");
 		FXMLLoader loader = new FXMLLoader(location);
-		Parent root = loader.load();
+		Parent root = null;
+		try {
+			root = loader.load();
+		} catch (IOException e) {
+		}
 		SudokuGameViewController game = loader.getController();
 		game.init(this, controller);
 		
 		gameScene = new Scene(root);
 	}
 	
-	private void initLoadScreen() throws IOException {
+	private void initLoadScreen() {
 		URL location = getClass().getResource("/edu/neumont/csc150/sudoku/view/sudokuloading/SudokuLoadingScreenView.fxml");
 		FXMLLoader loader = new FXMLLoader(location);
-		Parent root = loader.load();
-//		SudokuLoadingScreenViewController loadScreen = loader.getController();
-//		loadScreen.init(this, controller);
+		Parent root = null;
+		try {
+			root = loader.load();
+		} catch (IOException e) {
+		}
 		
 		loadScreenScene = new Scene(root);
 	}
 
-	public void showMainMenu() throws IOException {
+	public void showMainMenu() {
 		initMainMenu();
 		this.stage.setScene(mainMenuScene);
 		this.stage.show();
 	}
 
-	public void showDifficulty() throws IOException {
+	public void showDifficulty() {
 		initDifficulty();
 		this.stage.setScene(difficultyScene);
 		this.stage.show();
 	}
 
-	public void showGame() throws IOException {
+	public void showGame() {
 		initGame();
 		this.stage.setScene(gameScene);
 		this.stage.show();
 	}
 	
-	public void showLoad() throws IOException {
+	public void showLoad() {
 		initLoadScreen();
 		this.stage.setScene(loadScreenScene);
 		this.stage.show();
@@ -115,7 +128,7 @@ public class SudokuViewController implements SudokuView {
 		shutdown();
 	}
 
-	public void onNewGame(MouseEvent e) throws IOException {
+	public void onNewGame(MouseEvent e) {
 		showDifficulty();
 	}
 

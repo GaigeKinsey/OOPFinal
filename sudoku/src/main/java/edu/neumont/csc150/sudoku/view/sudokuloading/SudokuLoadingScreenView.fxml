@@ -4,9 +4,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1"
-			fx:controller="edu.neumont.csc150.sudoku.view.sudokuloading.SudokuLoadingScreenViewController"
-			stylesheets="@SudokuLoadingScreenView.css">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" stylesheets="@SudokuLoadingScreenView.css">
 	
 	<center>
 		<VBox>
