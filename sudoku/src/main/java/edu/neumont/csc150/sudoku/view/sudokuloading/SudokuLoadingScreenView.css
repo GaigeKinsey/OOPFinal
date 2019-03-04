@@ -1,3 +1,5 @@
 Label{
-	-fx-font-size: 20pt;
+	-fx-font-size: 50pt;
+	-fx-padding:275px 0px 0px 400px;
+	-fx-text-alignment: center;	
 }
