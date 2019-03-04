@@ -11,7 +11,6 @@ public class SudokuController {
 	private SudokuView view;
 
 	private Board board;
-	public boolean boardMade;
 
 	private int solutions = 0;
 
@@ -26,6 +25,7 @@ public class SudokuController {
 
 	public void makeBoard(String difficulty) {
 		int[][] intVals;
+		int boardCount = 0;
 		do {
 			solutions = 0;
 			switch (difficulty) {
@@ -50,7 +50,9 @@ public class SudokuController {
 				}
 			}
 			checkBoard(intVals, board.getSquares().length);
+			boardCount++;
 		} while (solutions != 1);
+		System.out.println("Boards made: " + boardCount);
 	}
 
 	private void generateBoard(String difficulty) {
@@ -84,7 +86,6 @@ public class SudokuController {
 				x++;
 			}
 		} while (x < hints);
-		boardMade = true;
 	}
 
 	private boolean checkBoard(int[][] board, int boardSize) {
