@@ -1,5 +1,7 @@
 package edu.neumont.csc150.sudoku.view.sudokugame;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,9 +10,13 @@ import edu.neumont.csc150.sudoku.view.SudokuViewController;
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
 
 public class SudokuGameViewController {
 	
@@ -27,9 +33,25 @@ public class SudokuGameViewController {
 	}
 	
 	public void onSave(ActionEvent e) {
-		
+		boolean saved = false;
+		do {
+			FileChooser chooser = new FileChooser();
+			chooser.setTitle("Select save file");
+			File file = chooser.showSaveDialog(this.mainView.getStage());
+
+			if (file == null) {
+				return; // because it is void - return just exits out the method and doesn't go on
+			}
+			try {
+				this.controller.save(file);
+				saved = true;
+			} catch (IOException ex) {
+				new Alert(AlertType.ERROR,
+						"An error occurred trying to save the file. \nPlease select another location.", ButtonType.OK)
+								.show();
+			}
+		} while (!saved);
 	}
-	
 	public void onClear(ActionEvent e) {
 		controller.clearBoard();
 		displayBoard();

@@ -58,7 +58,7 @@ public class SudokuViewController implements SudokuView {
 		} catch (IOException e) {
 		}
 		SudokuMainMenuViewController mainMenu = loader.getController();
-		mainMenu.init(this);
+		mainMenu.init(this, controller);
 
 		mainMenuScene = new Scene(root);
 	}
