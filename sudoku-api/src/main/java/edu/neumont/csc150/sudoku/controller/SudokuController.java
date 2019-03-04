@@ -1,5 +1,12 @@
 package edu.neumont.csc150.sudoku.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Random;
 
 import edu.neumont.csc150.sudoku.model.Board;
@@ -188,5 +195,17 @@ public class SudokuController {
 
 	public void setBoard(Board board) {
 		this.board = board;
+	}
+
+	public void save(File file) throws FileNotFoundException, IOException {
+		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
+			out.writeObject(this.board);
+		}
+	}
+
+	public void load(File file) throws ClassNotFoundException, IOException {
+		try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
+			this.board = (Board) in.readObject();
+		}
 	}
 }
