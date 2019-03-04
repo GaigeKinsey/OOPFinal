@@ -10,9 +10,9 @@
 	
 	<center>
 		<HBox>
-			<Label onMouseClicked="#onNewGame" fx:id="newGame">New Game</Label>
-			<Label onMouseClicked="#onLoadGame" fx:id="loadGame">Load Game</Label>
-			<Label onMouseClicked="#onExit" fx:id="exit">Exit</Label>
+			<Label onMouseClicked="#onNewGame">New Game</Label>
+			<Label onMouseClicked="#onLoadGame">Load Game</Label>
+			<Label onMouseClicked="#onExit">Exit</Label>
 		</HBox>
 	</center>
 

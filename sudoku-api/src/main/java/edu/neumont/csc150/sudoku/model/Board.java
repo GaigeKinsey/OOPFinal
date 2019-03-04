@@ -1,6 +1,13 @@
 package edu.neumont.csc150.sudoku.model;
 
-public class Board {
+import java.io.Serializable;
+
+public class Board implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private final int BOARDWIDTH = 9, BOARDHEIGHT = 9;
 

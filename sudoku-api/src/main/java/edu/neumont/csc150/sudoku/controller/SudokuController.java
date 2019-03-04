@@ -2,7 +2,6 @@ package edu.neumont.csc150.sudoku.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -197,7 +196,7 @@ public class SudokuController {
 		this.board = board;
 	}
 
-	public void save(File file) throws FileNotFoundException, IOException {
+	public void save(File file) throws IOException {
 		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
 			out.writeObject(this.board);
 		}

@@ -1,7 +1,14 @@
 package edu.neumont.csc150.sudoku.model;
 
-public class Square {
+import java.io.Serializable;
 
+public class Square implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private int value;
 	private boolean isHint;
 

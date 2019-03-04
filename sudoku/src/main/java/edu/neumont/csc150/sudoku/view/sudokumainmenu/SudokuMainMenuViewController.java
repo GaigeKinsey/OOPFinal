@@ -25,7 +25,7 @@ public class SudokuMainMenuViewController {
 		mainView.showDifficulty();
 	}
 
-	public void onLoadGame(ActionEvent e) {
+	public void onLoadGame(MouseEvent e) {
 		File file = null;
 		do {
 			FileChooser chooser = new FileChooser();
@@ -41,6 +41,7 @@ public class SudokuMainMenuViewController {
 				new Alert(AlertType.ERROR, "An error occurred trying to load the file \nPlease select another.", ButtonType.OK).show();
 			}
 		} while (file == null);
+		this.mainView.showGame();
 	}
 	
 	public void onExit(MouseEvent e) {
