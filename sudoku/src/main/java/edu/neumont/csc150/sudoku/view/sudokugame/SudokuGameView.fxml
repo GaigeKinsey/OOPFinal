@@ -9,15 +9,11 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.CheckMenuItem?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="edu.neumont.csc150.sudoku.view.sudokugame.SudokuGameViewController"
 	stylesheets="@SudokuGameView.css">
-
-	<fx:define>
-		<ToggleGroup fx:id="toggle">
-		</ToggleGroup>
-	</fx:define>
 
 	<top>
 		<MenuBar>
@@ -25,10 +21,10 @@
 				<MenuItem text="Save" onAction="#onSave"></MenuItem>
 				<MenuItem text="Clear Board" onAction="#onClear"></MenuItem>
 				<MenuItem text="New Puzzle" onAction="#onNewPuzzle"></MenuItem>	
-				<MenuItem text="Exit" onAction="#onExit"></MenuItem>
+				<MenuItem text="Main Menu" onAction="#onMainMenu"></MenuItem>
 			</Menu>
 			<Menu text ="Options">
-				<RadioMenuItem text="Notes" toggleGroup="$toggle"></RadioMenuItem>	
+				<CheckMenuItem text="Notes" onAction="#onToggled" fx:id="NotesButton"></CheckMenuItem>
 			</Menu>
 		</MenuBar>
 	</top>

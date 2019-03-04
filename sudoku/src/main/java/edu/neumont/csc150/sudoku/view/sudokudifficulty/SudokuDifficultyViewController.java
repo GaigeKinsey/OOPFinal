@@ -1,6 +1,7 @@
 package edu.neumont.csc150.sudoku.view.sudokudifficulty;
 
 import edu.neumont.csc150.sudoku.controller.SudokuController;
+import edu.neumont.csc150.sudoku.model.Difficulty;
 import edu.neumont.csc150.sudoku.view.SudokuViewController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -25,33 +26,15 @@ public class SudokuDifficultyViewController {
 	}
 
 	public void onEasy(MouseEvent e) {
-		loadBoard("Easy");
+		mainView.loadBoard(Difficulty.Easy);
 	}
 
 	public void onMedium(MouseEvent e) {
-		loadBoard("Medium");
+		mainView.loadBoard(Difficulty.Medium);
 	}
 
 	public void onHard(MouseEvent e) {
-		loadBoard("Hard");
-	}
-	
-	private void loadBoard(String difficulty) {
-		mainView.showLoad();
-		Runnable task = new Runnable() {
-			@Override
-			public void run() {
-				Runnable showGame = new Runnable() {
-					@Override
-					public void run() {
-						mainView.showGame();
-					}
-				};
-				controller.makeBoard(difficulty);
-				Platform.runLater(showGame);
-			}
-		};
-		new Thread(task).start();
+		mainView.loadBoard(Difficulty.Hard);
 	}
 
 	public void init(SudokuViewController sudokuViewController, SudokuController controller) {

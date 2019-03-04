@@ -3,8 +3,10 @@ package edu.neumont.csc150.sudoku.model;
 public class Square {
 
 	private int value;
+	private boolean isHint;
+
 	private boolean error;
-	
+
 	private boolean[] notes = new boolean[9];
 
 	public int getValue() {
@@ -13,6 +15,14 @@ public class Square {
 
 	public void setValue(int value) {
 		this.value = value;
+	}
+
+	public boolean isHint() {
+		return isHint;
+	}
+
+	public void setHint(boolean isHint) {
+		this.isHint = isHint;
 	}
 
 	public boolean isError() {

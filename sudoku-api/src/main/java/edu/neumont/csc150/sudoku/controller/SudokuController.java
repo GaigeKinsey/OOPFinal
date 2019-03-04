@@ -3,6 +3,7 @@ package edu.neumont.csc150.sudoku.controller;
 import java.util.Random;
 
 import edu.neumont.csc150.sudoku.model.Board;
+import edu.neumont.csc150.sudoku.model.Difficulty;
 import edu.neumont.csc150.sudoku.model.Square;
 import edu.neumont.csc150.sudoku.view.SudokuView;
 
@@ -23,24 +24,22 @@ public class SudokuController {
 		view.init();
 	}
 
-	public void makeBoard(String difficulty) {
+	public void clearBoard() {
+		for (Square[] squares : board.getSquares()) {
+			for (Square square : squares) {
+				if (!square.isHint()) {
+					square.setValue(0);
+				}
+			}
+		}
+	}
+
+	public void makeBoard(Difficulty difficulty) {
 		int[][] intVals;
 		int boardCount = 0;
 		do {
 			solutions = 0;
-			switch (difficulty) {
-			case "Easy":
-				generateBoard(difficulty);
-				break;
-			case "Medium":
-				generateBoard(difficulty);
-				break;
-			case "Hard":
-				generateBoard(difficulty);
-				break;
-			default:
-				throw new IllegalArgumentException("difficulty does not exist. " + difficulty);
-			}
+			generateBoard(difficulty);
 			// Get all the ints from the board to check
 			intVals = new int[board.getSquares().length][board.getSquares().length];
 			Square[][] squares = board.getSquares();
@@ -55,16 +54,16 @@ public class SudokuController {
 		System.out.println("Boards made: " + boardCount);
 	}
 
-	private void generateBoard(String difficulty) {
+	private void generateBoard(Difficulty difficulty) {
 		int hints = 0;
 		switch (difficulty) {
-		case "Easy":
+		case Easy:
 			hints = 38;
 			break;
-		case "Medium":
+		case Medium:
 			hints = 34;
 			break;
-		case "Hard":
+		case Hard:
 			hints = 30;
 			break;
 		}
@@ -83,6 +82,7 @@ public class SudokuController {
 			value = rng.nextInt(9) + 1;
 			if (board.checkSquare(col, row, value)) {
 				board.setSquare(col, row, value);
+				board.getSquares()[col][row].setHint(true);
 				x++;
 			}
 		} while (x < hints);

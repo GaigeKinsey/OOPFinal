@@ -23,7 +23,7 @@ public class SudokuMainMenuViewController {
 	}
 	
 	public void onExit(MouseEvent e) {
-		
+		mainView.shutdown();
 	}
 
 	public void init(SudokuViewController sudokuViewController) {

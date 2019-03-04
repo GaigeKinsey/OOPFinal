@@ -8,6 +8,7 @@ import edu.neumont.csc150.sudoku.view.SudokuViewController;
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
@@ -30,15 +31,27 @@ public class SudokuGameViewController {
 	}
 	
 	public void onClear(ActionEvent e) {
-		
+		controller.clearBoard();
+		displayBoard();
 	}
 	
 	public void onNewPuzzle(ActionEvent e) {
-		
+		mainView.loadBoard(mainView.getDifficulty());
 	}
 	
-	public void onExit(ActionEvent e) {
-		mainView.shutdown();
+	public void onMainMenu(ActionEvent e) {
+		mainView.showMainMenu();
+	}
+	
+	public void onToggled(ActionEvent e) {
+		CheckMenuItem notesBox = (CheckMenuItem) e.getSource();
+		if (notesBox.isSelected()) {
+			// Method call to display the notes in empty boxes
+
+		} else {
+			// Method call to display normal board
+			displayBoard();
+		}
 	}
 	
 	public void drawBoard() {

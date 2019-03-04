@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.net.URL;
 
 import edu.neumont.csc150.sudoku.controller.SudokuController;
+import edu.neumont.csc150.sudoku.model.Difficulty;
 import edu.neumont.csc150.sudoku.view.sudokudifficulty.SudokuDifficultyViewController;
 import edu.neumont.csc150.sudoku.view.sudokugame.SudokuGameViewController;
 import edu.neumont.csc150.sudoku.view.sudokumainmenu.SudokuMainMenuViewController;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,6 +25,8 @@ public class SudokuViewController implements SudokuView {
 	private Scene difficultyScene;
 	private Scene gameScene;
 	private Scene loadScreenScene;
+
+	private Difficulty difficulty;
 
 	public void setStage(Stage stage) {
 		this.stage = stage;
@@ -55,7 +59,7 @@ public class SudokuViewController implements SudokuView {
 		}
 		SudokuMainMenuViewController mainMenu = loader.getController();
 		mainMenu.init(this);
-		
+
 		mainMenuScene = new Scene(root);
 	}
 
@@ -70,7 +74,7 @@ public class SudokuViewController implements SudokuView {
 		}
 		SudokuDifficultyViewController difficulty = loader.getController();
 		difficulty.init(this, controller);
-		
+
 		difficultyScene = new Scene(root);
 	}
 
@@ -84,19 +88,20 @@ public class SudokuViewController implements SudokuView {
 		}
 		SudokuGameViewController game = loader.getController();
 		game.init(this, controller);
-		
+
 		gameScene = new Scene(root);
 	}
-	
+
 	private void initLoadScreen() {
-		URL location = getClass().getResource("/edu/neumont/csc150/sudoku/view/sudokuloading/SudokuLoadingScreenView.fxml");
+		URL location = getClass()
+				.getResource("/edu/neumont/csc150/sudoku/view/sudokuloading/SudokuLoadingScreenView.fxml");
 		FXMLLoader loader = new FXMLLoader(location);
 		Parent root = null;
 		try {
 			root = loader.load();
 		} catch (IOException e) {
 		}
-		
+
 		loadScreenScene = new Scene(root);
 	}
 
@@ -117,11 +122,30 @@ public class SudokuViewController implements SudokuView {
 		this.stage.setScene(gameScene);
 		this.stage.show();
 	}
-	
+
 	public void showLoad() {
 		initLoadScreen();
 		this.stage.setScene(loadScreenScene);
 		this.stage.show();
+	}
+
+	public void loadBoard(Difficulty difficulty) {
+		this.showLoad();
+		Runnable task = new Runnable() {
+			@Override
+			public void run() {
+				Runnable showGame = new Runnable() {
+					@Override
+					public void run() {
+						setDifficulty(difficulty);
+						showGame();
+					}
+				};
+				controller.makeBoard(difficulty);
+				Platform.runLater(showGame);
+			}
+		};
+		new Thread(task).start();
 	}
 
 	public void click(ActionEvent e) {
@@ -138,5 +162,13 @@ public class SudokuViewController implements SudokuView {
 
 	public void shutdown() {
 		stage.close();
+	}
+
+	public Difficulty getDifficulty() {
+		return difficulty;
+	}
+
+	public void setDifficulty(Difficulty difficulty) {
+		this.difficulty = difficulty;
 	}
 }
