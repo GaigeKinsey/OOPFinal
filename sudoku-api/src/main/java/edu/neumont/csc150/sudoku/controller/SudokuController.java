@@ -62,16 +62,20 @@ public class SudokuController {
 
 	private void generateBoard(Difficulty difficulty) {
 		int hints = 0;
-		switch (difficulty) {
-		case Easy:
-			hints = 38;
-			break;
-		case Medium:
+		if (difficulty == null) {
 			hints = 34;
-			break;
-		case Hard:
-			hints = 30;
-			break;
+		} else {
+			switch (difficulty) {
+			case Easy:
+				hints = 38;
+				break;
+			case Medium:
+				hints = 34;
+				break;
+			case Hard:
+				hints = 30;
+				break;
+			}
 		}
 
 		board = new Board();
