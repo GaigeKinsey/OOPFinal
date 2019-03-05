@@ -83,6 +83,7 @@ public class SudokuGameViewController {
 
 		PseudoClass right = PseudoClass.getPseudoClass("right");
 		PseudoClass bottom = PseudoClass.getPseudoClass("bottom");
+		PseudoClass selected = PseudoClass.getPseudoClass("selected");
 
 		for (int col = 0; col < 9; col++) {
 			for (int row = 0; row < 9; row++) {
@@ -96,6 +97,8 @@ public class SudokuGameViewController {
 						@Override
 						public void handle(MouseEvent mouseEvent) {
 							cell.requestFocus();
+							resetSelected();
+							cell.pseudoClassStateChanged(selected, true);
 							cell.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
 								@Override
@@ -125,6 +128,17 @@ public class SudokuGameViewController {
 		displayBoard();
 	}
 
+	private void resetSelected() {
+		PseudoClass selected = PseudoClass.getPseudoClass("selected");
+
+		for (int col = 0; col < 9; col++) {
+			for (int row = 0; row < 9; row++) {
+				Label cell = this.cells.get("" + col + "x" + row);
+				cell.pseudoClassStateChanged(selected, false);
+			}
+		}
+	}
+
 	public void displayBoard() {
 		for (int col = 0; col < 9; col++) {
 			for (int row = 0; row < 9; row++) {
@@ -135,7 +149,7 @@ public class SudokuGameViewController {
 					if (currentSquare.isHint()) {
 						cell.setTextFill(Color.BLACK);
 					}
-					if (!currentSquare.isHint()){
+					if (!currentSquare.isHint()) {
 						cell.setTextFill(Color.DARKCYAN);
 					}
 					if (currentSquare.isError()) {
