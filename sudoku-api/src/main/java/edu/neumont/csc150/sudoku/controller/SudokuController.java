@@ -63,17 +63,17 @@ public class SudokuController {
 	private void generateBoard(Difficulty difficulty) {
 		int hints = 0;
 		if (difficulty == null) {
-			hints = 34;
+			hints = 30;
 		} else {
 			switch (difficulty) {
 			case Easy:
-				hints = 38;
-				break;
-			case Medium:
 				hints = 34;
 				break;
-			case Hard:
+			case Medium:
 				hints = 30;
+				break;
+			case Hard:
+				hints = 26;
 				break;
 			}
 		}
@@ -89,11 +89,15 @@ public class SudokuController {
 		do {
 			col = rng.nextInt(9);
 			row = rng.nextInt(9);
-			value = rng.nextInt(9) + 1;
-			if (board.checkSquare(col, row, value)) {
+			if (board.getSquare(col, row).getValue() == 0) {
+				value = rng.nextInt(9) + 1;
 				board.setSquare(col, row, value);
-				board.getSquares()[col][row].setHint(true);
-				x++;
+				if (board.checkSquare(col, row, value)) {
+					board.getSquares()[col][row].setHint(true);
+					x++;
+				} else {
+					board.setSquare(col, row, 0);
+				}
 			}
 		} while (x < hints);
 	}

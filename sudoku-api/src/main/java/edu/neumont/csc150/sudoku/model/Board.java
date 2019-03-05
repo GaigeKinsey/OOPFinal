@@ -2,7 +2,7 @@ package edu.neumont.csc150.sudoku.model;
 
 import java.io.Serializable;
 
-public class Board implements Serializable{
+public class Board implements Serializable {
 
 	/**
 	 * 
@@ -25,12 +25,34 @@ public class Board implements Serializable{
 			}
 		}
 	}
-	
+
+	public void checkForErrors() {
+		boolean hasError = false;
+		for (int col = 0; col < BOARDWIDTH; col++) {
+			for (int row = 0; row < BOARDHEIGHT; row++) {
+				if (!checkSquare(col, row, getSquare(col, row).getValue())) {
+					getSquare(col, row).setError(true);
+					hasError = true;
+				} else {
+					getSquare(col, row).setError(false);
+				}
+			}
+		}
+		setCheckError(hasError);
+	}
+
 	public void setSquare(int col, int row, int value) {
 		squares[col][row].setValue(value);
 	}
 
+	public Square getSquare(int col, int row) {
+		return squares[col][row];
+	}
+
 	public boolean checkSquare(int col, int row, int value) {
+		if (value == 0) {
+			return true;
+		}
 		if (checkCol(col, value) || checkRow(row, value) || checkRegion(col, row, value)) {
 			return false;
 		}
@@ -38,44 +60,52 @@ public class Board implements Serializable{
 	}
 
 	private boolean checkCol(int col, int value) {
-		boolean matching = false;
+		int instances = 0;
 		for (int row = 0; row < BOARDHEIGHT; row++) {
 			if (value == squares[col][row].getValue()) {
-				matching = true;
+				instances++;
+				if (instances >= 2) {
+					return true;
+				}
 			}
 		}
-		return matching;
+		return false;
 	}
 
 	private boolean checkRow(int row, int value) {
-		boolean matching = false;
+		int instances = 0;
 		for (int col = 0; col < BOARDHEIGHT; col++) {
 			if (value == squares[col][row].getValue()) {
-				matching = true;
+				instances++;
+				if (instances >= 2) {
+					return true;
+				}
 			}
 		}
-		return matching;
+		return false;
 	}
 
 	private boolean checkRegion(int col, int row, int value) {
 		int colStart = col - col % 3;
 		int rowStart = row - row % 3;
-		
+
 		int currentRow;
-		
-		boolean matching = false;
-		
+
+		int instances = 0;
 		for (int colLoops = 0; colLoops < 3; colLoops++) {
 			currentRow = rowStart;
 			for (int rowLoops = 0; rowLoops < 3; rowLoops++) {
 				if (value == squares[colStart][currentRow].getValue()) {
-					matching = true;
+					instances++;
+					if (instances >= 2) {
+						return true;
+					}
 				}
 				currentRow++;
 			}
 			colStart++;
 		}
-		return matching;
+		return false;
 	}
 
 	public Square[][] getSquares() {
@@ -93,5 +123,4 @@ public class Board implements Serializable{
 	public void setCheckError(boolean checkError) {
 		this.checkError = checkError;
 	}
-
 }

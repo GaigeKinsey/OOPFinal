@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import edu.neumont.csc150.sudoku.controller.SudokuController;
+import edu.neumont.csc150.sudoku.model.Square;
 import edu.neumont.csc150.sudoku.view.SudokuViewController;
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
@@ -100,7 +101,6 @@ public class SudokuGameViewController {
 								@Override
 								public void handle(KeyEvent keyEvent) {
 									if (keyEvent.getCode().isDigitKey()) {
-										cell.setTextFill(Color.DARKCYAN);
 										controller.getBoard().setSquare(Integer.parseInt(cell.getId().split("x")[0]),
 												Integer.parseInt(cell.getId().split("x")[1]),
 												Integer.parseInt(keyEvent.getCode().getName()));
@@ -109,6 +109,7 @@ public class SudokuGameViewController {
 										controller.getBoard().setSquare(Integer.parseInt(cell.getId().split("x")[0]),
 												Integer.parseInt(cell.getId().split("x")[1]), 0);
 									}
+									controller.getBoard().checkForErrors();
 									displayBoard();
 								}
 							});
@@ -121,17 +122,25 @@ public class SudokuGameViewController {
 				this.sudokuBoard.add(cell, col, row);
 			}
 		}
-
 		displayBoard();
-
 	}
 
 	public void displayBoard() {
 		for (int col = 0; col < 9; col++) {
 			for (int row = 0; row < 9; row++) {
 				Label cell = cells.get("" + col + "x" + row);
-				int num = controller.getBoard().getSquares()[col][row].getValue();
+				Square currentSquare = controller.getBoard().getSquares()[col][row];
+				int num = currentSquare.getValue();
 				if (num != 0) {
+					if (currentSquare.isHint()) {
+						cell.setTextFill(Color.BLACK);
+					}
+					if (!currentSquare.isHint()){
+						cell.setTextFill(Color.DARKCYAN);
+					}
+					if (currentSquare.isError()) {
+						cell.setTextFill(Color.DEEPPINK);
+					}
 					cell.setText("" + num);
 				} else {
 					cell.setText("  ");
