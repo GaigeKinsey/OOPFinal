@@ -10,8 +10,6 @@ Label{
 .cell {
     -fx-background-color:  black, -fx-base;
 
-    -fx-background-insets: 0, 0;
-        
     -fx-padding: 5px;
 }
 
