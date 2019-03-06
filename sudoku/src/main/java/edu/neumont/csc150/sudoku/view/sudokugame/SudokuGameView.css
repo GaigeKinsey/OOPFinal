@@ -16,7 +16,7 @@
 }
 
 .cell:selected {
-	-fx-background-color: black, gray;
+	-fx-background-color: black, lightgray;
 }
 
 .cell:right {

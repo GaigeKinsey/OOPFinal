@@ -197,10 +197,10 @@ public class SudokuGameViewController {
 					if (currentSquare.isHint()) {
 						cell.setTextFill(Color.BLACK);
 					} else {
-						cell.setTextFill(Color.DARKCYAN);
+						cell.setTextFill(Color.LIGHTSEAGREEN);
 					}
 					if (currentSquare.isError()) {
-						cell.setTextFill(Color.DEEPPINK);
+						cell.setTextFill(Color.RED);
 					}
 					cell.setText("" + num);
 				} else {
