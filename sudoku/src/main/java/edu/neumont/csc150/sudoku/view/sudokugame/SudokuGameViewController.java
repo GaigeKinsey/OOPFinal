@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import edu.neumont.csc150.sudoku.controller.SudokuController;
 import edu.neumont.csc150.sudoku.model.Square;
@@ -57,6 +58,7 @@ public class SudokuGameViewController {
 
 	public void onClear(ActionEvent e) {
 		controller.clearBoard();
+		controller.getBoard().checkForErrors();
 		displayBoard();
 	}
 
@@ -114,6 +116,9 @@ public class SudokuGameViewController {
 									}
 									controller.getBoard().checkForErrors();
 									displayBoard();
+									if (controller.getBoard().checkForWin()) {
+										win();
+									}
 								}
 							});
 						}
@@ -135,6 +140,21 @@ public class SudokuGameViewController {
 			for (int row = 0; row < 9; row++) {
 				Label cell = this.cells.get("" + col + "x" + row);
 				cell.pseudoClassStateChanged(selected, false);
+			}
+		}
+	}
+
+	private void win() {
+		ButtonType newBoard = new ButtonType("New Board");
+		ButtonType mainMenu = new ButtonType("Main Menu");
+		Optional<ButtonType> winAlert = new Alert(AlertType.INFORMATION,
+				"You have won! Would you like to make another board of the same difficulty, or return to the main menu?",
+				newBoard, mainMenu).showAndWait();
+		if (winAlert.isPresent()) {
+			if (winAlert.get().equals(newBoard)) {
+				mainView.loadBoard(mainView.getDifficulty());
+			} else if (winAlert.get().equals(mainMenu)) {
+				mainView.showMainMenu();
 			}
 		}
 	}

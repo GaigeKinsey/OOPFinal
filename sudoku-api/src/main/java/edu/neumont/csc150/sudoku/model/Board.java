@@ -41,6 +41,22 @@ public class Board implements Serializable {
 		setCheckError(hasError);
 	}
 
+	public boolean checkForWin() {
+		boolean won = true;
+		for (Square[] squares : this.squares) {
+			for (Square square : squares) {
+				if (square.getValue() == 0) {
+					won = false;
+					break;
+				}
+			}
+			if (!won) {
+				break;
+			}
+		}
+		return won && !checkError;
+	}
+	
 	public void setSquare(int col, int row, int value) {
 		squares[col][row].setValue(value);
 	}
