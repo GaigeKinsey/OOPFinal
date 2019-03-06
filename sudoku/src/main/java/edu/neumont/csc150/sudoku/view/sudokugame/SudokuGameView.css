@@ -1,14 +1,16 @@
-Label{
+#timer {
+	-fx-padding: 0px 10px;
+	-fx-font-size: 15pt;
+}
+
+.cell {
+    -fx-background-color:  black, -fx-base;
 	-fx-font-size: 20.0pt;
 	-fx-label-padding: 10.0px 22.5px;
     -fx-border-insets: 1.0;
     -fx-border-width: 1.0px;
     -fx-border-style: solid;
     -fx-border-color: black;
-}
-
-.cell {
-    -fx-background-color:  black, -fx-base;
 
     -fx-padding: 5.0px;
 }

@@ -34,6 +34,10 @@
 			<GridPane fx:id="sudokuBoard"></GridPane>
 		</HBox>
 	</center>
+	
+	<bottom>
+		<Label fx:id="timer">Time: 0:00</Label>
+	</bottom>
 
 </BorderPane>
 

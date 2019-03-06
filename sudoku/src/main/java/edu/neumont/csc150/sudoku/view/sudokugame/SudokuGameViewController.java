@@ -9,6 +9,8 @@ import java.util.Optional;
 import edu.neumont.csc150.sudoku.controller.SudokuController;
 import edu.neumont.csc150.sudoku.model.Square;
 import edu.neumont.csc150.sudoku.view.SudokuViewController;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,6 +26,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
 
 public class SudokuGameViewController {
 
@@ -32,8 +35,13 @@ public class SudokuGameViewController {
 
 	private Map<String, Label> cells = new HashMap<>();
 
+	private int time = 0;
+
 	@FXML
 	private GridPane sudokuBoard;
+
+	@FXML
+	private Label timer;
 
 	public void onSave(ActionEvent e) {
 		boolean saved = false;
@@ -168,8 +176,7 @@ public class SudokuGameViewController {
 				if (num != 0) {
 					if (currentSquare.isHint()) {
 						cell.setTextFill(Color.BLACK);
-					}
-					if (!currentSquare.isHint()) {
+					} else {
 						cell.setTextFill(Color.DARKCYAN);
 					}
 					if (currentSquare.isError()) {
@@ -183,9 +190,23 @@ public class SudokuGameViewController {
 		}
 	}
 
+	private void timer() {
+		time++;
+		int milis = time % 10;
+		int seconds = (time / 10) % 60;
+		int minutes = time / 10 / 60;
+
+		String secondsString = seconds < 10 ? "0" + seconds : "" + seconds;
+
+		timer.setText("Time: " + minutes + ":" + secondsString + "." + milis);
+	}
+
 	public void init(SudokuViewController sudokuViewController, SudokuController controller) {
 		mainView = sudokuViewController;
 		this.controller = controller;
 		drawBoard();
+		Timeline timer = new Timeline(new KeyFrame(Duration.millis(100), e -> timer()));
+		timer.setCycleCount(Timeline.INDEFINITE);
+		timer.play();
 	}
 }
