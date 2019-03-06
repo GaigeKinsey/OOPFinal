@@ -20,6 +20,8 @@ public class SudokuController {
 	private Board board;
 
 	private int solutions = 0;
+	
+	private int boardCount = 0;
 
 	public SudokuController(SudokuView viewController) {
 		this.view = viewController;
@@ -42,7 +44,7 @@ public class SudokuController {
 
 	public void makeBoard(Difficulty difficulty) {
 		int[][] intVals;
-		int boardCount = 0;
+		boardCount = 0;
 		do {
 			solutions = 0;
 			generateBoard(difficulty);
@@ -204,6 +206,10 @@ public class SudokuController {
 		this.board = board;
 	}
 
+	public int getBoardCount() {
+		return this.boardCount;
+	}
+	
 	public void save(File file) throws IOException {
 		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
 			out.writeObject(this.board);

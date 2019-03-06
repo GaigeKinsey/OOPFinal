@@ -7,6 +7,7 @@ import edu.neumont.csc150.sudoku.controller.SudokuController;
 import edu.neumont.csc150.sudoku.model.Difficulty;
 import edu.neumont.csc150.sudoku.view.sudokudifficulty.SudokuDifficultyViewController;
 import edu.neumont.csc150.sudoku.view.sudokugame.SudokuGameViewController;
+import edu.neumont.csc150.sudoku.view.sudokuloading.SudokuLoadingScreenController;
 import edu.neumont.csc150.sudoku.view.sudokumainmenu.SudokuMainMenuViewController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -101,6 +102,8 @@ public class SudokuViewController implements SudokuView {
 			root = loader.load();
 		} catch (IOException e) {
 		}
+		SudokuLoadingScreenController load = loader.getController();
+		load.init(controller);
 
 		loadScreenScene = new Scene(root);
 	}

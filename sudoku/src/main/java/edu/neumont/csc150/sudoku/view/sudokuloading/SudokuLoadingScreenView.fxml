@@ -4,11 +4,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" stylesheets="@SudokuLoadingScreenView.css">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.neumont.csc150.sudoku.view.sudokuloading.SudokuLoadingScreenController" stylesheets="@SudokuLoadingScreenView.css">
 	
 	<center>
 		<VBox>
 			<Label>Loading Game...</Label>
+			<Label fx:id="boardCount">Boards Made: 0</Label>
 		</VBox>	
 	</center>
 	

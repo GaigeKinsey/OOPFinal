@@ -1,5 +1,8 @@
-Label{
-	-fx-font-size: 50pt;
-	-fx-padding:275px 0px 0px 400px;
+VBox {
+	-fx-alignment: center;
+}
+
+Label {
+	-fx-font-size: 50.0pt;
 	-fx-text-alignment: center;	
 }
