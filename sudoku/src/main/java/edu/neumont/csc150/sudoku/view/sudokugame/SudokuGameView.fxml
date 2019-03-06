@@ -24,7 +24,7 @@
 				<MenuItem text="Main Menu" onAction="#onMainMenu"></MenuItem>
 			</Menu>
 			<Menu text ="Options">
-				<CheckMenuItem text="Notes" onAction="#onToggled" fx:id="NotesButton"></CheckMenuItem>
+				<CheckMenuItem text="Notes" onAction="#onToggled" fx:id="notesButton"></CheckMenuItem>
 			</Menu>
 		</MenuBar>
 	</top>

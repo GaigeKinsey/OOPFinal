@@ -43,6 +43,9 @@ public class SudokuGameViewController {
 	@FXML
 	private Label timer;
 
+	@FXML
+	private CheckMenuItem notesButton;
+
 	public void onSave(ActionEvent e) {
 		boolean saved = false;
 		do {
@@ -109,20 +112,37 @@ public class SudokuGameViewController {
 							cell.requestFocus();
 							resetSelected();
 							cell.pseudoClassStateChanged(selected, true);
+
 							cell.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
 								@Override
 								public void handle(KeyEvent keyEvent) {
-									if (keyEvent.getCode().isDigitKey()) {
-										controller.getBoard().setSquare(Integer.parseInt(cell.getId().split("x")[0]),
-												Integer.parseInt(cell.getId().split("x")[1]),
-												Integer.parseInt(keyEvent.getCode().getName()));
+									if (notesButton.isSelected()) {
+										if (keyEvent.getCode().isDigitKey()) {
+											if (!keyEvent.getCode().getName().matches("0")) {
+												int index = Integer.parseInt(keyEvent.getCode().getName()) - 1;
+												Square currentSquare = controller.getBoard().getSquare(
+														Integer.parseInt(cell.getId().split("x")[0]),
+														Integer.parseInt(cell.getId().split("x")[1]));
+												boolean[] notes = currentSquare.getNotes();
+												notes[index] = !notes[index];
+												currentSquare.setNotes(notes);
+											}
+										}
+									} else {
+										if (keyEvent.getCode().isDigitKey()) {
+											controller.getBoard().setSquare(
+													Integer.parseInt(cell.getId().split("x")[0]),
+													Integer.parseInt(cell.getId().split("x")[1]),
+													Integer.parseInt(keyEvent.getCode().getName()));
+										}
+										if (keyEvent.getCode() == KeyCode.BACK_SPACE) {
+											controller.getBoard().setSquare(
+													Integer.parseInt(cell.getId().split("x")[0]),
+													Integer.parseInt(cell.getId().split("x")[1]), 0);
+										}
+										controller.getBoard().checkForErrors();
 									}
-									if (keyEvent.getCode() == KeyCode.BACK_SPACE) {
-										controller.getBoard().setSquare(Integer.parseInt(cell.getId().split("x")[0]),
-												Integer.parseInt(cell.getId().split("x")[1]), 0);
-									}
-									controller.getBoard().checkForErrors();
 									displayBoard();
 									if (controller.getBoard().checkForWin()) {
 										win();
