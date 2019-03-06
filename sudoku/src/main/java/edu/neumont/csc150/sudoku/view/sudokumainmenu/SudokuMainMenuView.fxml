@@ -3,17 +3,22 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.ImageView?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="edu.neumont.csc150.sudoku.view.sudokumainmenu.SudokuMainMenuViewController"
 	stylesheets="@SudokuMainMenuView.css">
 	
 	<center>
+	<VBox>
+		<ImageView fx:id="image"></ImageView>
 		<HBox>
 			<Label onMouseClicked="#onNewGame">New Game</Label>
 			<Label onMouseClicked="#onLoadGame">Load Game</Label>
-			<Label onMouseClicked="#onExit">Exit</Label>
+			<Label onMouseClicked="#onExit">Exit Game</Label>
 		</HBox>
+	</VBox>
 	</center>
 
 </BorderPane>

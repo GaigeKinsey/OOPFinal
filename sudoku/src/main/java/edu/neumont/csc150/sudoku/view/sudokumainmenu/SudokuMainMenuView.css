@@ -1,12 +1,19 @@
 Label{
-	-fx-font-size: 20pt;
-	-fx-label-padding: 20px;
+	-fx-font-size: 20.0pt;
+	-fx-pref-width: 200.0px;
+	-fx-pref-height: 100.0px;
+	-fx-alignment: center;
 	-fx-border-color: black;
-    -fx-border-insets: 10;
-    -fx-border-width: 3;
+    -fx-border-insets: 10.0;
+    -fx-border-width: 3.0;
     -fx-border-style: solid;
 }
 
 HBox{
+	-fx-alignment: center;
+	-fx-padding: 100.0px;	
+}
+
+VBox {
 	-fx-alignment: center;
 }
