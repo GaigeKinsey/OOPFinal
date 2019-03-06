@@ -45,7 +45,7 @@ public class SudokuMainMenuViewController {
 			} catch (IOException | ClassNotFoundException ex) {
 				file = null;
 				new Alert(AlertType.ERROR, "An error occurred trying to load the file \nPlease select another.",
-						ButtonType.OK).show();
+						ButtonType.OK).showAndWait();
 			}
 		} while (file == null);
 		this.mainView.showGame();

@@ -62,7 +62,7 @@ public class SudokuGameViewController {
 			} catch (IOException ex) {
 				new Alert(AlertType.ERROR,
 						"An error occurred trying to save the file. \nPlease select another location.", ButtonType.OK)
-								.show();
+								.showAndWait();
 			}
 		} while (!saved);
 	}
