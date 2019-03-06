@@ -59,7 +59,8 @@ public class SudokuController {
 			checkBoard(intVals, board.getSquares().length);
 			boardCount++;
 		} while (solutions != 1);
-		System.out.println("Boards made: " + boardCount);
+		solveBoard(intVals, board.getSquares().length);
+		board.setSolvedBoard(intVals);
 	}
 
 	private void generateBoard(Difficulty difficulty) {
@@ -126,14 +127,13 @@ public class SudokuController {
 			}
 		}
 
-		// space, if more than one solution then board is not unique
-		if (solutions > 1) {
-			return true;
-		}
-
 		// If no empty space found, board is filled, count up one solution, and clear
 		if (!empty) {
 			solutions++;
+			// If more than one solution then board is not unique
+			if (solutions > 1) {
+				return true;
+			}
 			return false;
 		}
 
@@ -154,6 +154,50 @@ public class SudokuController {
 		return false;
 	}
 
+	private boolean solveBoard(int[][] board, int boardSize) {
+		int col = -1;
+		int row = -1;
+		boolean empty = false;
+		// Check to see if there is still an empty spot on the board
+		for (int x = 0; x < boardSize; x++) {
+			for (int y = 0; y < boardSize; y++) {
+				// If the value at this index is 0
+				if (board[x][y] == 0) {
+					// Then this space is empty, start here
+					col = x;
+					row = y;
+					empty = true;
+					break;
+				}
+			}
+			// If we found an empty square, no sense in looping here
+			if (empty) {
+				break;
+			}
+		}
+
+		// If no empty space found, board is solved
+		if (!empty) {
+			return true;
+		}
+
+		// If there was an empty space, fill it
+		for (int num = 1; num <= boardSize; num++) {
+			// If it can be placed here, do it
+			if (spotValid(board, col, row, num)) {
+				board[col][row] = num;
+				// Loop again for the next empty space if there isn't more than 1 solution found
+				if (solveBoard(board, boardSize)) {
+					return true;
+				} else {
+					// replace this spot to backtrack
+					board[col][row] = 0;
+				}
+			}
+		}
+		return false;
+	}
+	
 	private boolean spotValid(int[][] board, int col, int row, int num) {
 		if (checkCol(board, col, num) || checkRow(board, row, num) || checkRegion(board, col, row, num)) {
 			return false;

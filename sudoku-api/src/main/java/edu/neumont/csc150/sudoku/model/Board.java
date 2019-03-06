@@ -12,6 +12,7 @@ public class Board implements Serializable {
 	private final int BOARDWIDTH = 9, BOARDHEIGHT = 9;
 
 	private Square[][] squares = new Square[BOARDWIDTH][BOARDHEIGHT];
+	private int[][] solvedBoard;
 	private boolean checkError;
 
 	public Board() {
@@ -130,6 +131,14 @@ public class Board implements Serializable {
 
 	public void setSquares(Square[][] squares) {
 		this.squares = squares;
+	}
+
+	public int[][] getSolvedBoard() {
+		return solvedBoard;
+	}
+
+	public void setSolvedBoard(int[][] solvedBoard) {
+		this.solvedBoard = solvedBoard;
 	}
 
 	public boolean isCheckError() {
