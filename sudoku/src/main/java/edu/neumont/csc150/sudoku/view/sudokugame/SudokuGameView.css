@@ -14,32 +14,17 @@ Label{
 }
 
 .cell:selected {
-	-fx-background-color: black, gray ;
+	-fx-background-color: black, gray;
 }
 
 .cell:right {
-    -fx-background-insets: 0.0, 0.0 4.0 0.0 0.0 ;
-}
-
-.cell:right:selected {
-	-fx-background-color: black, gray ;
-	-fx-background-insets: 0.0, 0.0 4.0 0.0 0.0 ;
+    -fx-background-insets: 0.0, 0.0 4.0 0.0 0.0;
 }
 
 .cell:bottom {
-    -fx-background-insets: 0.0, 0.0 0.0 4.0 0.0 ;
-}
-
-.cell:bottom:selected {
-	-fx-background-color: black, gray ;
-	-fx-background-insets: 0.0, 0.0 0.0 4.0 0.0 ;
+    -fx-background-insets: 0.0, 0.0 0.0 4.0 0.0;
 }
 
 .cell:right:bottom {
-    -fx-background-insets: 0.0, 0.0 4.0 4.0 0.0 ;
-}
-
-.cell:right:bottom:selected {
-	-fx-background-color: black, gray ;
-	-fx-background-insets: 0.0, 0.0 4.0 4.0 0.0 ;
+    -fx-background-insets: 0.0, 0.0 4.0 4.0 0.0;
 }
