@@ -1,18 +1,18 @@
 #timer {
-	-fx-padding: 0px 10px;
-	-fx-font-size: 15pt;
+	-fx-padding: 0.0px 10.0px;
+	-fx-font-size: 15.0pt;
 }
 
 .cell {
     -fx-background-color:  black, -fx-base;
 	-fx-font-size: 20.0pt;
-	-fx-label-padding: 10.0px 22.5px;
+	-fx-alignment: center;
     -fx-border-insets: 1.0;
     -fx-border-width: 1.0px;
     -fx-border-style: solid;
     -fx-border-color: black;
-
-    -fx-padding: 5.0px;
+    -fx-min-width: 69.0px;
+    -fx-min-height: 69.0px;
 }
 
 .cell:selected {
@@ -28,5 +28,40 @@
 }
 
 .cell:right:bottom {
+    -fx-background-insets: 0.0, 0.0 4.0 4.0 0.0;
+}
+
+.notes {
+	-fx-background-color:  black, -fx-base;
+	-fx-font-size: 11.0pt;
+	-fx-alignment: center;
+    -fx-border-insets: 1.0;
+    -fx-border-width: 1.0px;
+    -fx-border-style: solid;
+    -fx-border-color: black;
+    -fx-min-width: 69.0px;
+    -fx-min-height: 69.0px;
+    -fx-padding: 33%;
+}
+
+.note {
+	-fx-alignment: center;
+	-fx-min-height: 12px;
+	-fx-min-width: 16px;
+}
+
+.notes:selected {
+	-fx-background-color: black, lightgray;
+}
+
+.notes:right {
+    -fx-background-insets: 0.0, 0.0 4.0 0.0 0.0;
+}
+
+.notes:bottom {
+    -fx-background-insets: 0.0, 0.0 0.0 4.0 0.0;
+}
+
+.notes:right:bottom {
     -fx-background-insets: 0.0, 0.0 4.0 4.0 0.0;
 }

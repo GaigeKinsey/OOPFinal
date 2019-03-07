@@ -15,6 +15,7 @@ import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
@@ -33,7 +34,7 @@ public class SudokuGameViewController {
 	private SudokuViewController mainView;
 	private SudokuController controller;
 
-	private Map<String, Label> cells = new HashMap<>();
+	private Map<String, Node> cells = new HashMap<>();
 
 	private int time = 0;
 
@@ -81,84 +82,63 @@ public class SudokuGameViewController {
 		mainView.showMainMenu();
 	}
 
-	public void onToggled(ActionEvent e) {
-		CheckMenuItem notesBox = (CheckMenuItem) e.getSource();
-		if (notesBox.isSelected()) {
-			// Method call to display the notes in empty boxes TODO
-
-		} else {
-			// Method call to display normal board
-			displayBoard();
-		}
-	}
-
-	public void drawBoard() {
+	public void formatCell(Node cell, int col, int row) {
 
 		PseudoClass right = PseudoClass.getPseudoClass("right");
 		PseudoClass bottom = PseudoClass.getPseudoClass("bottom");
 		PseudoClass selected = PseudoClass.getPseudoClass("selected");
 
-		for (int col = 0; col < 9; col++) {
-			for (int row = 0; row < 9; row++) {
-				Label cell = new Label();
-				cell.getStyleClass().add("cell");
-				cell.pseudoClassStateChanged(right, col == 2 || col == 5);
-				cell.pseudoClassStateChanged(bottom, row == 2 || row == 5);
-				if (!controller.getBoard().getSquares()[col][row].isHint()) {
-					cell.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		cell.pseudoClassStateChanged(right, col == 2 || col == 5);
+		cell.pseudoClassStateChanged(bottom, row == 2 || row == 5);
 
+		if (!controller.getBoard().getSquares()[col][row].isHint()) {
+			cell.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+				@Override
+				public void handle(MouseEvent mouseEvent) {
+					cell.requestFocus();
+					resetSelected();
+					cell.pseudoClassStateChanged(selected, true);
+
+					cell.setOnKeyPressed(new EventHandler<KeyEvent>() {
 						@Override
-						public void handle(MouseEvent mouseEvent) {
-							cell.requestFocus();
-							resetSelected();
-							cell.pseudoClassStateChanged(selected, true);
-
-							cell.setOnKeyPressed(new EventHandler<KeyEvent>() {
-
-								@Override
-								public void handle(KeyEvent keyEvent) {
-									if (notesButton.isSelected()) {
-										if (keyEvent.getCode().isDigitKey()) {
-											if (!keyEvent.getCode().getName().matches("0")) {
-												int index = Integer.parseInt(keyEvent.getCode().getName()) - 1;
-												Square currentSquare = controller.getBoard().getSquare(
-														Integer.parseInt(cell.getId().split("x")[0]),
-														Integer.parseInt(cell.getId().split("x")[1]));
-												boolean[] notes = currentSquare.getNotes();
-												notes[index] = !notes[index];
-												currentSquare.setNotes(notes);
-											}
-										}
-									} else {
-										if (keyEvent.getCode().isDigitKey()) {
-											controller.getBoard().setSquare(
-													Integer.parseInt(cell.getId().split("x")[0]),
-													Integer.parseInt(cell.getId().split("x")[1]),
-													Integer.parseInt(keyEvent.getCode().getName()));
-										}
-										if (keyEvent.getCode() == KeyCode.BACK_SPACE) {
-											controller.getBoard().setSquare(
-													Integer.parseInt(cell.getId().split("x")[0]),
-													Integer.parseInt(cell.getId().split("x")[1]), 0);
-										}
-										controller.getBoard().checkForErrors();
-									}
-									displayBoard();
-									if (controller.getBoard().checkForWin()) {
-										win();
+						public void handle(KeyEvent keyEvent) {
+							if (notesButton.isSelected()) {
+								if (keyEvent.getCode().isDigitKey()) {
+									if (!keyEvent.getCode().getName().matches("0")) {
+										int index = Integer.parseInt(keyEvent.getCode().getName()) - 1;
+										Square currentSquare = controller.getBoard().getSquare(
+												Integer.parseInt(cell.getId().split("x")[0]),
+												Integer.parseInt(cell.getId().split("x")[1]));
+										boolean[] notes = currentSquare.getNotes();
+										notes[index] = !notes[index];
+										currentSquare.setNotes(notes);
 									}
 								}
-							});
+							} else {
+								if (keyEvent.getCode().isDigitKey()) {
+									controller.getBoard().setSquare(Integer.parseInt(cell.getId().split("x")[0]),
+											Integer.parseInt(cell.getId().split("x")[1]),
+											Integer.parseInt(keyEvent.getCode().getName()));
+								}
+								if (keyEvent.getCode() == KeyCode.BACK_SPACE) {
+									controller.getBoard().setSquare(Integer.parseInt(cell.getId().split("x")[0]),
+											Integer.parseInt(cell.getId().split("x")[1]), 0);
+								}
+								controller.getBoard().checkForErrors();
+							}
+							displayBoard();
+							if (controller.getBoard().checkForWin()) {
+								win();
+							}
 						}
 					});
 				}
-
-				cell.setId("" + col + "x" + row);
-				this.cells.put(cell.getId(), cell);
-				this.sudokuBoard.add(cell, col, row);
-			}
+			});
 		}
-		displayBoard();
+
+		cell.setId("" + col + "x" + row);
+		this.cells.put(cell.getId(), cell);
 	}
 
 	private void resetSelected() {
@@ -166,7 +146,7 @@ public class SudokuGameViewController {
 
 		for (int col = 0; col < 9; col++) {
 			for (int row = 0; row < 9; row++) {
-				Label cell = this.cells.get("" + col + "x" + row);
+				Node cell = this.cells.get("" + col + "x" + row);
 				cell.pseudoClassStateChanged(selected, false);
 			}
 		}
@@ -190,24 +170,62 @@ public class SudokuGameViewController {
 	public void displayBoard() {
 		for (int col = 0; col < 9; col++) {
 			for (int row = 0; row < 9; row++) {
-				Label cell = cells.get("" + col + "x" + row);
-				Square currentSquare = controller.getBoard().getSquares()[col][row];
+				Square currentSquare = controller.getBoard().getSquare(col, row);
 				int num = currentSquare.getValue();
-				if (num != 0) {
-					if (currentSquare.isHint()) {
-						cell.setTextFill(Color.BLACK);
-					} else {
-						cell.setTextFill(Color.LIGHTSEAGREEN);
-					}
-					if (currentSquare.isError()) {
-						cell.setTextFill(Color.RED);
-					}
-					cell.setText("" + num);
+				if (num == 0) {
+					sudokuBoard.add(makeHintCell(currentSquare, col, row), col, row);
 				} else {
-					cell.setText("  ");
+					Label cell = makeNormalCell(col, row);
+					if (num != 0) {
+						if (currentSquare.isHint()) {
+							cell.setTextFill(Color.BLACK);
+						} else {
+							cell.setTextFill(Color.LIGHTSEAGREEN);
+						}
+						if (currentSquare.isError()) {
+							cell.setTextFill(Color.RED);
+						}
+						cell.setText("" + num);
+					} else {
+						cell.setText("  ");
+					}
+					
+					sudokuBoard.add(cell, col, row);
 				}
 			}
 		}
+	}
+
+	private Label makeNormalCell(int c, int r) {
+		Label label = new Label();
+		label.getStyleClass().add("cell");
+		formatCell(label, c, r);
+
+		return label;
+	}
+
+	private GridPane makeHintCell(Square currentSquare, int c, int r) {
+		GridPane gridPane = new GridPane();
+		gridPane.getStyleClass().add("notes");
+		int index = 0;
+		for (int col = 0; col < 3; col++) {
+			for (int row = 0; row < 3; row++) {
+				boolean note = currentSquare.getNotes()[index];
+				index++;
+				Label noteLabel = new Label();
+				noteLabel.getStyleClass().add("note");
+				if (note) {
+					noteLabel.setText("" + index);
+					gridPane.add(noteLabel, row, col);
+				} else {
+					noteLabel.setText("  ");
+					gridPane.add(noteLabel, row, col);
+				}
+			}
+		}
+		formatCell(gridPane, c, r);
+
+		return gridPane;
 	}
 
 	private void timer() {
@@ -224,7 +242,15 @@ public class SudokuGameViewController {
 	public void init(SudokuViewController sudokuViewController, SudokuController controller) {
 		mainView = sudokuViewController;
 		this.controller = controller;
-		drawBoard();
+
+		for (int col = 0; col < 9; col++) {
+			for (int row = 0; row < 9; row++) {
+				formatCell(new Label(), col, row);
+			}
+		}
+
+		displayBoard();
+
 		Timeline timer = new Timeline(new KeyFrame(Duration.millis(100), e -> timer()));
 		timer.setCycleCount(Timeline.INDEFINITE);
 		timer.play();
