@@ -22,6 +22,8 @@ public class SudokuController {
 	private int solutions = 0;
 	
 	private int boardCount = 0;
+	
+	private Random rng = new Random();
 
 	public SudokuController(SudokuView viewController) {
 		this.view = viewController;
@@ -37,6 +39,7 @@ public class SudokuController {
 			for (Square square : squares) {
 				if (!square.isHint()) {
 					square.setValue(0);
+					square.setModified(true);
 					square.setNotes(new boolean[square.getNotes().length]);
 				}
 			}
@@ -87,7 +90,6 @@ public class SudokuController {
 		int col;
 		int row;
 		int value;
-		Random rng = new Random();
 
 		int x = 0;
 		do {
