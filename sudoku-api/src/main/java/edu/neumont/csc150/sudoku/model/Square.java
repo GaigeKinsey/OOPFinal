@@ -38,8 +38,10 @@ public class Square implements Serializable{
 	}
 
 	public void setError(boolean error) {
-		this.error = error;
-		this.setModified(true);
+		if (this.error != error) {
+			this.error = error;
+			this.setModified(true);
+		}
 	}
 
 	public boolean[] getNotes() {
