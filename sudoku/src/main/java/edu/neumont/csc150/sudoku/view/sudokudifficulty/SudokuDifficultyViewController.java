@@ -3,7 +3,6 @@ package edu.neumont.csc150.sudoku.view.sudokudifficulty;
 import edu.neumont.csc150.sudoku.controller.SudokuController;
 import edu.neumont.csc150.sudoku.model.Difficulty;
 import edu.neumont.csc150.sudoku.view.SudokuViewController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,10 +15,6 @@ public class SudokuDifficultyViewController {
 	
 	@FXML
 	private ImageView image;
-
-	public void click(ActionEvent e) {
-		mainView.click(e);
-	}
 
 	public void onEasy(MouseEvent e) {
 		mainView.loadBoard(Difficulty.Easy);
