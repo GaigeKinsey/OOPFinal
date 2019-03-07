@@ -13,6 +13,7 @@ public class Square implements Serializable{
 	private boolean isHint;
 
 	private boolean error;
+	private boolean modified = true;
 
 	private boolean[] notes = new boolean[9];
 
@@ -38,6 +39,7 @@ public class Square implements Serializable{
 
 	public void setError(boolean error) {
 		this.error = error;
+		this.setModified(true);
 	}
 
 	public boolean[] getNotes() {
@@ -46,5 +48,13 @@ public class Square implements Serializable{
 
 	public void setNotes(boolean[] notes) {
 		this.notes = notes;
+	}
+
+	public boolean isModified() {
+		return modified;
+	}
+
+	public void setModified(boolean modified) {
+		this.modified = modified;
 	}
 }

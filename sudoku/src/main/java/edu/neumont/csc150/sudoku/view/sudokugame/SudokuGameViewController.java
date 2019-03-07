@@ -103,6 +103,8 @@ public class SudokuGameViewController {
 					cell.setOnKeyPressed(new EventHandler<KeyEvent>() {
 						@Override
 						public void handle(KeyEvent keyEvent) {
+							controller.getBoard().getSquare(Integer.parseInt(cell.getId().split("x")[0]),
+									Integer.parseInt(cell.getId().split("x")[1])).setModified(true);
 							if (notesButton.isSelected()) {
 								if (keyEvent.getCode().isDigitKey()) {
 									if (!keyEvent.getCode().getName().matches("0")) {
@@ -117,28 +119,32 @@ public class SudokuGameViewController {
 								}
 							} else {
 								if (keyEvent.getCode().isDigitKey()) {
-									controller.getBoard().setSquare(Integer.parseInt(cell.getId().split("x")[0]),
-											Integer.parseInt(cell.getId().split("x")[1]),
-											Integer.parseInt(keyEvent.getCode().getName()));
+									Square currentSquare = controller.getBoard().getSquare(Integer.parseInt(cell.getId().split("x")[0]),
+											Integer.parseInt(cell.getId().split("x")[1]));
+									currentSquare.setValue(Integer.parseInt(keyEvent.getCode().getName()));
 								}
 								if (keyEvent.getCode() == KeyCode.BACK_SPACE) {
-									controller.getBoard().setSquare(Integer.parseInt(cell.getId().split("x")[0]),
-											Integer.parseInt(cell.getId().split("x")[1]), 0);
+									Square currentSquare = controller.getBoard().getSquare(Integer.parseInt(cell.getId().split("x")[0]),
+											Integer.parseInt(cell.getId().split("x")[1]));
+									currentSquare.setValue(0);
 								}
 								controller.getBoard().checkForErrors();
 							}
+							// Make new cell based on the values in the board
 							displayBoard();
-							if (controller.getBoard().checkForWin()) {
-								win();
-							}
 						}
+
 					});
 				}
 			});
 		}
-
 		cell.setId("" + col + "x" + row);
+
 		this.cells.put(cell.getId(), cell);
+
+		if (controller.getBoard().checkForWin()) {
+			win();
+		}
 	}
 
 	private void resetSelected() {
@@ -171,34 +177,35 @@ public class SudokuGameViewController {
 		for (int col = 0; col < 9; col++) {
 			for (int row = 0; row < 9; row++) {
 				Square currentSquare = controller.getBoard().getSquare(col, row);
-				int num = currentSquare.getValue();
-				if (num == 0) {
-					sudokuBoard.add(makeHintCell(currentSquare, col, row), col, row);
-				} else {
-					Label cell = makeNormalCell(col, row);
-					if (num != 0) {
-						if (currentSquare.isHint()) {
-							cell.setTextFill(Color.BLACK);
-						} else {
-							cell.setTextFill(Color.LIGHTSEAGREEN);
-						}
-						if (currentSquare.isError()) {
-							cell.setTextFill(Color.RED);
-						}
-						cell.setText("" + num);
+				if (currentSquare.isModified()) {
+					int num = currentSquare.getValue();
+					if (num == 0) {
+						sudokuBoard.add(makeHintCell(currentSquare, col, row), col, row);
 					} else {
-						cell.setText("  ");
+						sudokuBoard.add(makeNormalCell(col, row, num, currentSquare), col, row);
 					}
-					
-					sudokuBoard.add(cell, col, row);
+					currentSquare.setModified(false);
 				}
 			}
 		}
 	}
 
-	private Label makeNormalCell(int c, int r) {
+	private Label makeNormalCell(int c, int r, int num, Square currentSquare) {
 		Label label = new Label();
 		label.getStyleClass().add("cell");
+		if (num != 0) {
+			if (currentSquare.isHint()) {
+				label.setTextFill(Color.BLACK);
+			} else {
+				label.setTextFill(Color.LIGHTSEAGREEN);
+			}
+			if (currentSquare.isError()) {
+				label.setTextFill(Color.RED);
+			}
+			label.setText("" + num);
+		} else {
+			label.setText("  ");
+		}
 		formatCell(label, c, r);
 
 		return label;
