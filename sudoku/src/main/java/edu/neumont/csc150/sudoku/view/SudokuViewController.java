@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -47,6 +48,7 @@ public class SudokuViewController implements SudokuView {
 		this.stage.setResizable(false);
 		this.stage.setWidth(1280);
 		this.stage.setHeight(720);
+		this.stage.getIcons().add(new Image(this.getClass().getResourceAsStream("/edu/neumont/csc150/sudoku/view/icon.png")));
 		showMainMenu();
 	}
 

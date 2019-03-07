@@ -3,15 +3,24 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.neumont.csc150.sudoku.view.sudokuloading.SudokuLoadingScreenController" stylesheets="@SudokuLoadingScreenView.css">
-	
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="edu.neumont.csc150.sudoku.view.sudokuloading.SudokuLoadingScreenController"
+	stylesheets="@SudokuLoadingScreenView.css">
+
 	<center>
-		<VBox>
-			<Label>Loading Game...</Label>
-			<Label fx:id="boardCount">Boards Made: 0</Label>
-		</VBox>	
+		<HBox>
+			<ImageView fx:id="image"></ImageView>
+		</HBox>
 	</center>
-	
+
+	<bottom>
+		<VBox>
+			<Label fx:id="boardCount">Boards Made: 0</Label>
+		</VBox>
+	</bottom>
+
 </BorderPane>
 

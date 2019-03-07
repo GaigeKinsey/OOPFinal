@@ -1,19 +1,26 @@
+BorderPane{
+	-fx-background-color: white;
+}
+
 Label{
 	-fx-font-size: 20.0pt;
-	-fx-pref-width: 200.0px;
+	-fx-pref-width: 300.0px;
 	-fx-pref-height: 100.0px;
 	-fx-alignment: center;
 	-fx-border-color: black;
     -fx-border-insets: 10.0;
     -fx-border-width: 3.0;
     -fx-border-style: solid;
+    -fx-font-family: 'Last Ninja';
+    -fx-text-fill: black;
 }
 
-HBox{
+#options{
 	-fx-alignment: center;
-	-fx-padding: 100.0px;	
+	-fx-padding: 100px
 }
 
 VBox {
 	-fx-alignment: center;
 }
+

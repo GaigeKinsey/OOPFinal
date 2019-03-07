@@ -1,12 +1,13 @@
 Label{
-	-fx-font-size: 20.0pt;
-	-fx-pref-width: 200.0px;
+	-fx-font-size: 25pt;
+	-fx-pref-width: 300.0px;
 	-fx-pref-height: 100.0px;
 	-fx-alignment: center;
 	-fx-border-color: black;
     -fx-border-insets: 10.0;
     -fx-border-width: 3.0;
     -fx-border-style: solid;
+    -fx-font-family: 'Last Ninja';
 }
 
 #difficulty{

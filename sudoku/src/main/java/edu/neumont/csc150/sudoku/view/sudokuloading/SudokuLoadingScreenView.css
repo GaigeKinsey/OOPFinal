@@ -1,8 +1,13 @@
-VBox {
+HBox{
 	-fx-alignment: center;
 }
 
+VBox {
+	-fx-alignment: bottom-center;
+}
+
 Label {
-	-fx-font-size: 50.0pt;
+	-fx-font-size: 25.0pt;
 	-fx-text-alignment: center;	
+	-fx-font-family: 'Last Ninja';
 }

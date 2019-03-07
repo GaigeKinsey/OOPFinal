@@ -5,6 +5,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public class SudokuLoadingScreenController {
@@ -12,6 +14,9 @@ public class SudokuLoadingScreenController {
 	
 	@FXML
 	private Label boardCount;
+	
+	@FXML
+	private ImageView image;
 
 	public void init(SudokuController controller) {
 		this.controller = controller;
@@ -22,5 +27,7 @@ public class SudokuLoadingScreenController {
 
 	private void boardCountDisplay() {
 		this.boardCount.setText("Boards Made: " + controller.getBoardCount());
+		Image img = new Image("/edu/neumont/csc150/sudoku/view/sudokuloading/Loading.png");
+		image.setImage(img);	
 	}
 }

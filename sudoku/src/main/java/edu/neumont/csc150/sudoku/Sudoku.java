@@ -3,7 +3,7 @@ package edu.neumont.csc150.sudoku;
 import edu.neumont.csc150.sudoku.controller.SudokuController;
 import edu.neumont.csc150.sudoku.view.SudokuViewController;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Sudoku extends Application{
@@ -17,6 +17,7 @@ public class Sudoku extends Application{
 		SudokuViewController viewController = new SudokuViewController();
 		viewController.setStage(stage);
 		SudokuController controller = new SudokuController(viewController);
+		Font.loadFont(getClass().getResourceAsStream("/edu/neumont/csc150/sudoku/view/lastninja.ttf"), 25);
 		controller.run();
 	}
 }
