@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import edu.neumont.csc150.sudoku.controller.SudokuController;
 import edu.neumont.csc150.sudoku.view.SudokuViewController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -22,10 +21,6 @@ public class SudokuMainMenuViewController {
 
 	@FXML
 	private ImageView image;
-
-	public void click(ActionEvent e) {
-		mainView.click(e);
-	}
 
 	public void onNewGame(MouseEvent e) throws IOException {
 		mainView.showDifficulty();

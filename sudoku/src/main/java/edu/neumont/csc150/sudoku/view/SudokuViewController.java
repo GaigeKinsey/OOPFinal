@@ -10,12 +10,10 @@ import edu.neumont.csc150.sudoku.view.sudokugame.SudokuGameViewController;
 import edu.neumont.csc150.sudoku.view.sudokuloading.SudokuLoadingScreenController;
 import edu.neumont.csc150.sudoku.view.sudokumainmenu.SudokuMainMenuViewController;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class SudokuViewController implements SudokuView {
@@ -151,18 +149,6 @@ public class SudokuViewController implements SudokuView {
 			}
 		};
 		new Thread(task).start();
-	}
-
-	public void click(ActionEvent e) {
-		shutdown();
-	}
-
-	public void onNewGame(MouseEvent e) {
-		showDifficulty();
-	}
-
-	public void onLoadGame(MouseEvent e) {
-
 	}
 
 	public void shutdown() {
