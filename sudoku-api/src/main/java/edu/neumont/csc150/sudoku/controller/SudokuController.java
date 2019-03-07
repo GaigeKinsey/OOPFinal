@@ -37,6 +37,7 @@ public class SudokuController {
 			for (Square square : squares) {
 				if (!square.isHint()) {
 					square.setValue(0);
+					square.setNotes(new boolean[square.getNotes().length]);
 				}
 			}
 		}
