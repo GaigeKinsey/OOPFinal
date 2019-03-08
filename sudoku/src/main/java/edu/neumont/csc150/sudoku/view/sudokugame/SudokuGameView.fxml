@@ -16,7 +16,7 @@
 <?import javafx.scene.control.cell.CheckBoxListCell?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="edu.neumont.csc150.sudoku.view.sudokugame.SudokuGameViewController"
-	stylesheets="@SudokuGameView.css">
+	stylesheets="@SudokuGameView.css" fx:id="borderPane">
 
 	<top>
 		<MenuBar>
@@ -25,9 +25,6 @@
 				<MenuItem text="Clear Board" onAction="#onClear"></MenuItem>
 				<MenuItem text="New Puzzle" onAction="#onNewPuzzle"></MenuItem>
 				<MenuItem text="Main Menu" onAction="#onMainMenu"></MenuItem>
-			</Menu>
-			<Menu text="Options">
-				<CheckMenuItem text="Notes" fx:id="notesButton"></CheckMenuItem>
 			</Menu>
 		</MenuBar>
 	</top>
@@ -42,7 +39,7 @@
 		<HBox>
 			<VBox>
 				<Button fx:id="giveup">Give Up</Button>
-				<CheckBox fx:id="notes1">Notes</CheckBox>
+				<CheckBox fx:id="notesButton">Notes</CheckBox>
 			</VBox>
 		</HBox>
 	</right>

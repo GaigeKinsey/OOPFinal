@@ -1,6 +1,5 @@
 package edu.neumont.csc150.sudoku.view.sudokugame;
 
-import java.awt.Checkbox;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -21,11 +20,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -38,7 +38,11 @@ public class SudokuGameViewController {
 
 	private Map<String, Node> cells = new HashMap<>();
 
+	private Timeline timeCount;
 	private int time = 0;
+	
+	@FXML
+	private BorderPane borderPane;
 
 	@FXML
 	private GridPane sudokuBoard;
@@ -47,10 +51,7 @@ public class SudokuGameViewController {
 	private Label timer;
 
 	@FXML
-	private CheckMenuItem notesButton;
-
-	@FXML
-	private Checkbox notes;
+	private CheckBox notesButton;
 
 	@FXML
 	private Button giveup;
@@ -83,10 +84,18 @@ public class SudokuGameViewController {
 	}
 
 	public void onNewPuzzle(ActionEvent e) {
+		borderPane.getChildren().clear();
+		timeCount.stop();
+		cells = new HashMap<>();
+		controller = null;
 		mainView.loadBoard(mainView.getDifficulty());
 	}
 
 	public void onMainMenu(ActionEvent e) {
+		borderPane.getChildren().clear();
+		timeCount.stop();
+		cells = new HashMap<>();
+		controller = null;
 		mainView.showMainMenu();
 	}
 
@@ -252,12 +261,13 @@ public class SudokuGameViewController {
 		int milis = time % 10;
 		int seconds = (time / 10) % 60;
 		int minutes = time / 10 / 60;
+		System.out.println(time);
 
 		String secondsString = seconds < 10 ? "0" + seconds : "" + seconds;
 
 		timer.setText("Time: " + minutes + ":" + secondsString + "." + milis);
 	}
-
+	
 	public void init(SudokuViewController sudokuViewController, SudokuController controller) {
 		mainView = sudokuViewController;
 		this.controller = controller;
@@ -270,8 +280,8 @@ public class SudokuGameViewController {
 
 		displayBoard();
 
-		Timeline timer = new Timeline(new KeyFrame(Duration.millis(100), e -> timer()));
-		timer.setCycleCount(Timeline.INDEFINITE);
-		timer.play();
+		timeCount = new Timeline(new KeyFrame(Duration.millis(100), e -> timer()));
+		timeCount.setCycleCount(Timeline.INDEFINITE);
+		timeCount.play();
 	}
 }
