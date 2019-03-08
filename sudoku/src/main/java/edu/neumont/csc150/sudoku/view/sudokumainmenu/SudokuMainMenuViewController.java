@@ -6,6 +6,7 @@ import java.io.IOException;
 import edu.neumont.csc150.sudoku.controller.SudokuController;
 import edu.neumont.csc150.sudoku.view.SudokuViewController;
 import edu.neumont.csc150.sudoku.view.sudokugame.SudokuGameViewController;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -14,8 +15,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
@@ -82,11 +81,32 @@ public class SudokuMainMenuViewController {
 
 		Image img = new Image("/edu/neumont/csc150/sudoku/view/sudokumainmenu/title.png");
 		image.setImage(img);
-		
-		if(player.isMute()) {
-			this.muteButton.setText("+ Mute");
-		} else {
-			this.muteButton.setText("Mute");
-		}
+
+		Runnable musicController = new Runnable() {
+			@Override
+			public void run() {
+				while (true) {
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							if (player.isMute()) {
+								muteButton.setText("+ Mute");
+							} else {
+								muteButton.setText("Mute");
+							}
+						}
+					});
+					synchronized (SudokuViewController.class) {
+						try {
+							SudokuViewController.class.wait();
+						} catch (InterruptedException e) {
+						}
+					}
+				}
+			}
+		};
+		Thread musicThred = new Thread(musicController);
+		musicThred.setDaemon(true);
+		musicThred.start();
 	}
 }

@@ -128,6 +128,9 @@ public class SudokuViewController implements SudokuView {
 		if (mainMenu == null) {
 			mainMenu = initMainMenu();
 		}
+		synchronized (SudokuViewController.class) {
+			SudokuViewController.class.notifyAll();
+		}
 		this.stage.setScene(mainMenu);
 		this.stage.show();
 	}
@@ -136,6 +139,9 @@ public class SudokuViewController implements SudokuView {
 		if (difficultyMenu == null) {
 			difficultyMenu = initDifficulty();
 		}
+		synchronized (SudokuViewController.class) {
+			SudokuViewController.class.notifyAll();
+		}
 		this.stage.setScene(difficultyMenu);
 		this.stage.show();
 	}
@@ -143,6 +149,9 @@ public class SudokuViewController implements SudokuView {
 	public void showGame() {
 		if (gameMenu == null) {
 			gameMenu = initGame();
+		}
+		synchronized (SudokuViewController.class) {
+			SudokuViewController.class.notifyAll();
 		}
 		this.stage.setScene(gameMenu);
 		this.stage.show();

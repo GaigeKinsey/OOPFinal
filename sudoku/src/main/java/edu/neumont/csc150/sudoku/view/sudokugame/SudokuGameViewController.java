@@ -327,11 +327,32 @@ public class SudokuGameViewController {
 		this.controller = controller;
 		this.player = sudokuViewController.getPlayer();
 		
-		if(player.isMute()) {
-			this.muteButton.setText("+ Mute");
-		} else {
-			this.muteButton.setText("Mute");
-		}
+		Runnable musicController = new Runnable() {
+			@Override
+			public void run() {
+				while (true) {
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							if (player.isMute()) {
+								muteButton.setText("+ Mute");
+							} else {
+								muteButton.setText("Mute");
+							}
+						}
+					});
+					synchronized (SudokuViewController.class) {
+						try {
+							SudokuViewController.class.wait();
+						} catch (InterruptedException e) {
+						}
+					}
+				}
+			}
+		};
+		Thread musicThred = new Thread(musicController);
+		musicThred.setDaemon(true);
+		musicThred.start();
 
 		Runnable displayRefresh = new Runnable() {
 			@Override
