@@ -21,10 +21,6 @@ public class SudokuViewController implements SudokuView {
 	private SudokuController controller;
 
 	private Stage stage;
-	private Scene mainMenuScene;
-	private Scene difficultyScene;
-	private Scene gameScene;
-	private Scene loadScreenScene;
 
 	private Difficulty difficulty;
 
@@ -50,7 +46,7 @@ public class SudokuViewController implements SudokuView {
 		showMainMenu();
 	}
 
-	private void initMainMenu() {
+	private Scene initMainMenu() {
 		URL location = getClass().getResource("/edu/neumont/csc150/sudoku/view/sudokumainmenu/SudokuMainMenuView.fxml");
 		FXMLLoader loader = new FXMLLoader(location);
 		Parent root = null;
@@ -61,10 +57,10 @@ public class SudokuViewController implements SudokuView {
 		SudokuMainMenuViewController mainMenu = loader.getController();
 		mainMenu.init(this, controller);
 
-		mainMenuScene = new Scene(root);
+		return new Scene(root);
 	}
 
-	private void initDifficulty() {
+	private Scene initDifficulty() {
 		URL location = getClass()
 				.getResource("/edu/neumont/csc150/sudoku/view/sudokudifficulty/SudokuDifficultyView.fxml");
 		FXMLLoader loader = new FXMLLoader(location);
@@ -76,10 +72,10 @@ public class SudokuViewController implements SudokuView {
 		SudokuDifficultyViewController difficulty = loader.getController();
 		difficulty.init(this, controller);
 
-		difficultyScene = new Scene(root);
+		return new Scene(root);
 	}
 
-	private void initGame() {
+	private Scene initGame() {
 		URL location = getClass().getResource("/edu/neumont/csc150/sudoku/view/sudokugame/SudokuGameView.fxml");
 		FXMLLoader loader = new FXMLLoader(location);
 		Parent root = null;
@@ -90,10 +86,10 @@ public class SudokuViewController implements SudokuView {
 		SudokuGameViewController game = loader.getController();
 		game.init(this, controller);
 
-		gameScene = new Scene(root);
+		return new Scene(root);
 	}
 
-	private void initLoadScreen() {
+	private Scene initLoadScreen() {
 		URL location = getClass()
 				.getResource("/edu/neumont/csc150/sudoku/view/sudokuloading/SudokuLoadingScreenView.fxml");
 		FXMLLoader loader = new FXMLLoader(location);
@@ -105,30 +101,26 @@ public class SudokuViewController implements SudokuView {
 		SudokuLoadingScreenController load = loader.getController();
 		load.init(controller);
 
-		loadScreenScene = new Scene(root);
+		return new Scene(root);
 	}
 
 	public void showMainMenu() {
-		initMainMenu();
-		this.stage.setScene(mainMenuScene);
+		this.stage.setScene(initMainMenu());
 		this.stage.show();
 	}
 
 	public void showDifficulty() {
-		initDifficulty();
-		this.stage.setScene(difficultyScene);
+		this.stage.setScene(initDifficulty());
 		this.stage.show();
 	}
 
 	public void showGame() {
-		initGame();
-		this.stage.setScene(gameScene);
+		this.stage.setScene(initGame());
 		this.stage.show();
 	}
 
 	public void showLoad() {
-		initLoadScreen();
-		this.stage.setScene(loadScreenScene);
+		this.stage.setScene(initLoadScreen());
 		this.stage.show();
 	}
 
