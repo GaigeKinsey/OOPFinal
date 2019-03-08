@@ -1,6 +1,5 @@
 package edu.neumont.csc150.sudoku.view.sudokudifficulty;
 
-import edu.neumont.csc150.sudoku.controller.SudokuController;
 import edu.neumont.csc150.sudoku.model.Difficulty;
 import edu.neumont.csc150.sudoku.view.SudokuViewController;
 import javafx.fxml.FXML;
@@ -11,7 +10,6 @@ import javafx.scene.input.MouseEvent;
 public class SudokuDifficultyViewController {
 
 	private SudokuViewController mainView;
-	private SudokuController controller;
 	
 	@FXML
 	private ImageView image;
@@ -28,9 +26,8 @@ public class SudokuDifficultyViewController {
 		mainView.loadBoard(Difficulty.Hard);
 	}
 
-	public void init(SudokuViewController sudokuViewController, SudokuController controller) {
+	public void init(SudokuViewController sudokuViewController) {
 		mainView = sudokuViewController;
-		this.controller = controller;
 		Image img = new Image("/edu/neumont/csc150/sudoku/view/sudokudifficulty/DifficultyTitle.png");
 		image.setImage(img);
 	}

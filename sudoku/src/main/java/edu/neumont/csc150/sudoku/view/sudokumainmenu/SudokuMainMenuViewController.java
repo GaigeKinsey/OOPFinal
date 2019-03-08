@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import edu.neumont.csc150.sudoku.controller.SudokuController;
 import edu.neumont.csc150.sudoku.view.SudokuViewController;
+import edu.neumont.csc150.sudoku.view.sudokugame.SudokuGameViewController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -43,6 +44,9 @@ public class SudokuMainMenuViewController {
 						ButtonType.OK).showAndWait();
 			}
 		} while (file == null);
+		synchronized (SudokuGameViewController.class) {
+			SudokuGameViewController.class.notifyAll();
+		}
 		this.mainView.showGame();
 	}
 

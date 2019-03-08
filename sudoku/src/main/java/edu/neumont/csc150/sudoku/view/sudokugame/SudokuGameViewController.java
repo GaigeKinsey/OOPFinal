@@ -11,6 +11,7 @@ import edu.neumont.csc150.sudoku.model.Square;
 import edu.neumont.csc150.sudoku.view.SudokuViewController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -80,19 +81,41 @@ public class SudokuGameViewController {
 	}
 
 	public void onNewPuzzle(ActionEvent e) {
-		borderPane.getChildren().clear();
-		timeCount.stop();
-		cells = new HashMap<>();
-		controller = null;
+		time = 0;
+		timeCount.pause();
+		notesButton.setSelected(false);
 		mainView.loadBoard(mainView.getDifficulty());
+		Runnable waitForPuzzle = new Runnable() {
+			@Override
+			public void run() {
+				try {
+					synchronized (SudokuGameViewController.class) {
+						SudokuGameViewController.class.wait();
+					}
+				} catch (InterruptedException e1) {
+				}
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						displayBoard();
+						timeCount.play();
+					}
+				});
+			}
+		};
+		new Thread(waitForPuzzle).start();
 	}
 
 	public void onMainMenu(ActionEvent e) {
-		borderPane.getChildren().clear();
-		timeCount.stop();
-		cells = new HashMap<>();
-		controller = null;
+		time = 0;
+		timeCount.pause();
+		notesButton.setSelected(false);
 		mainView.showMainMenu();
+		for (int col = 0; col < 9; col++) {
+			for (int row = 0; row < 9; row++) {
+				controller.getBoard().getSquares()[col][row].setValue(0);
+			}
+		}
 	}
 
 	private EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
@@ -255,8 +278,9 @@ public class SudokuGameViewController {
 	public void onGiveUp(ActionEvent e) {
 		timeCount.stop();
 		Optional<ButtonType> answer = new Alert(AlertType.WARNING,
-				"Are you sure you would like to give up? This will prevent you from continuing the solve and show you the solution to the puzzle.", ButtonType.NO, ButtonType.YES).showAndWait();
-		
+				"Are you sure you would like to give up? This will prevent you from continuing the solve and show you the solution to the puzzle.",
+				ButtonType.NO, ButtonType.YES).showAndWait();
+
 		if (answer.isPresent()) {
 			if (answer.get().equals(ButtonType.YES)) {
 				int[][] squares = controller.getBoard().getSolvedBoard();
@@ -282,7 +306,6 @@ public class SudokuGameViewController {
 		int milis = time % 10;
 		int seconds = (time / 10) % 60;
 		int minutes = time / 10 / 60;
-		System.out.println(time);
 
 		String secondsString = seconds < 10 ? "0" + seconds : "" + seconds;
 
@@ -290,19 +313,51 @@ public class SudokuGameViewController {
 	}
 
 	public void init(SudokuViewController sudokuViewController, SudokuController controller) {
-		mainView = sudokuViewController;
+		this.mainView = sudokuViewController;
 		this.controller = controller;
 
+		initHelper();
+
+		Runnable displayRefresh = new Runnable() {
+			@Override
+			public void run() {
+				while (true) {
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							initHelper();
+						}
+					});
+					try {
+						synchronized (SudokuGameViewController.class) {
+							SudokuGameViewController.class.wait();
+						}
+					} catch (InterruptedException e) {
+					}
+				}
+			}
+		};
+		Thread refresh = new Thread(displayRefresh);
+		refresh.setDaemon(true);
+		refresh.start();
+	}
+
+	private void initHelper() {
 		for (int col = 0; col < 9; col++) {
 			for (int row = 0; row < 9; row++) {
 				formatCell(new Label(), col, row);
+				controller.getBoard().getSquare(col, row).setModified(true);
 			}
 		}
 
-		displayBoard();
-
+		time = 0;
+		if (timeCount != null) {
+			timeCount.stop();
+		}
 		timeCount = new Timeline(new KeyFrame(Duration.millis(100), e -> timer()));
 		timeCount.setCycleCount(Timeline.INDEFINITE);
 		timeCount.play();
+
+		displayBoard();
 	}
 }

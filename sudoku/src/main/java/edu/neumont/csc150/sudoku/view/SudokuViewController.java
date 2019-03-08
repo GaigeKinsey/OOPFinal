@@ -22,6 +22,11 @@ public class SudokuViewController implements SudokuView {
 
 	private Stage stage;
 
+	private Scene mainMenu;
+	private Scene difficultyMenu;
+	private Scene gameMenu;
+	private Scene loadingMenu;
+
 	private Difficulty difficulty;
 
 	public void setStage(Stage stage) {
@@ -42,7 +47,8 @@ public class SudokuViewController implements SudokuView {
 		this.stage.setResizable(false);
 		this.stage.setWidth(1280);
 		this.stage.setHeight(720);
-		this.stage.getIcons().add(new Image(this.getClass().getResourceAsStream("/edu/neumont/csc150/sudoku/view/icon.png")));
+		this.stage.getIcons()
+				.add(new Image(this.getClass().getResourceAsStream("/edu/neumont/csc150/sudoku/view/icon.png")));
 		showMainMenu();
 	}
 
@@ -70,7 +76,7 @@ public class SudokuViewController implements SudokuView {
 		} catch (IOException e) {
 		}
 		SudokuDifficultyViewController difficulty = loader.getController();
-		difficulty.init(this, controller);
+		difficulty.init(this);
 
 		return new Scene(root);
 	}
@@ -105,22 +111,34 @@ public class SudokuViewController implements SudokuView {
 	}
 
 	public void showMainMenu() {
-		this.stage.setScene(initMainMenu());
+		if (mainMenu == null) {
+			mainMenu = initMainMenu();
+		}
+		this.stage.setScene(mainMenu);
 		this.stage.show();
 	}
 
 	public void showDifficulty() {
-		this.stage.setScene(initDifficulty());
+		if (difficultyMenu == null) {
+			difficultyMenu = initDifficulty();
+		}
+		this.stage.setScene(difficultyMenu);
 		this.stage.show();
 	}
 
 	public void showGame() {
-		this.stage.setScene(initGame());
+		if (gameMenu == null) {
+			gameMenu = initGame();
+		}
+		this.stage.setScene(gameMenu);
 		this.stage.show();
 	}
 
 	public void showLoad() {
-		this.stage.setScene(initLoadScreen());
+		if (loadingMenu == null) {
+			loadingMenu = initLoadScreen();
+		}
+		this.stage.setScene(loadingMenu);
 		this.stage.show();
 	}
 
@@ -138,6 +156,9 @@ public class SudokuViewController implements SudokuView {
 				};
 				controller.makeBoard(difficulty);
 				Platform.runLater(showGame);
+				synchronized (SudokuGameViewController.class) {
+					SudokuGameViewController.class.notifyAll();
+				}
 			}
 		};
 		new Thread(task).start();
