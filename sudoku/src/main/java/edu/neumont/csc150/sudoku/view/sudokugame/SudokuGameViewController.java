@@ -19,14 +19,15 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
@@ -35,14 +36,12 @@ public class SudokuGameViewController {
 
 	private SudokuViewController mainView;
 	private SudokuController controller;
+	private MediaPlayer player;
 
 	private Map<String, Node> cells = new HashMap<>();
 
 	private Timeline timeCount;
 	private int time = 0;
-
-	@FXML
-	private BorderPane borderPane;
 
 	@FXML
 	private GridPane sudokuBoard;
@@ -53,6 +52,9 @@ public class SudokuGameViewController {
 	@FXML
 	private CheckBox notesButton;
 
+	@FXML
+	private Button muteButton;
+	
 	public void onSave(ActionEvent e) {
 		boolean saved = false;
 		do {
@@ -85,25 +87,6 @@ public class SudokuGameViewController {
 		timeCount.pause();
 		notesButton.setSelected(false);
 		mainView.loadBoard(mainView.getDifficulty());
-		Runnable waitForPuzzle = new Runnable() {
-			@Override
-			public void run() {
-				try {
-					synchronized (SudokuGameViewController.class) {
-						SudokuGameViewController.class.wait();
-					}
-				} catch (InterruptedException e1) {
-				}
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						displayBoard();
-						timeCount.play();
-					}
-				});
-			}
-		};
-		new Thread(waitForPuzzle).start();
 	}
 
 	public void onMainMenu(ActionEvent e) {
@@ -115,6 +98,33 @@ public class SudokuGameViewController {
 			for (int row = 0; row < 9; row++) {
 				controller.getBoard().getSquares()[col][row].setValue(0);
 			}
+		}
+	}
+
+	public void onKeyPressed(KeyEvent e) {
+		if (e.getCode().equals(KeyCode.M)) {
+			if (this.player.isMute()) {
+				this.player.setMute(false);
+				this.player.play();
+			} else {
+				this.player.setMute(true);
+				this.player.pause();
+			}
+		}
+		if (e.getCode().equals(KeyCode.N)) {
+			notesButton.setSelected(!notesButton.isSelected());
+		}
+	}
+
+	public void onMute(ActionEvent e) {
+		if (this.player.isMute()) {
+			this.muteButton.setText("Mute");
+			this.player.setMute(false);
+			this.player.play();
+		} else {
+			this.muteButton.setText("+ Mute");
+			this.player.setMute(true);
+			this.player.pause();
 		}
 	}
 
@@ -315,8 +325,13 @@ public class SudokuGameViewController {
 	public void init(SudokuViewController sudokuViewController, SudokuController controller) {
 		this.mainView = sudokuViewController;
 		this.controller = controller;
-
-		initHelper();
+		this.player = sudokuViewController.getPlayer();
+		
+		if(player.isMute()) {
+			this.muteButton.setText("+ Mute");
+		} else {
+			this.muteButton.setText("Mute");
+		}
 
 		Runnable displayRefresh = new Runnable() {
 			@Override

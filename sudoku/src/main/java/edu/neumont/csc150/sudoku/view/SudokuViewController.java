@@ -1,6 +1,7 @@
 package edu.neumont.csc150.sudoku.view;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import edu.neumont.csc150.sudoku.controller.SudokuController;
@@ -14,6 +15,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 public class SudokuViewController implements SudokuView {
@@ -21,6 +24,8 @@ public class SudokuViewController implements SudokuView {
 	private SudokuController controller;
 
 	private Stage stage;
+	
+	private MediaPlayer player;
 
 	private Scene mainMenu;
 	private Scene difficultyMenu;
@@ -49,6 +54,15 @@ public class SudokuViewController implements SudokuView {
 		this.stage.setHeight(720);
 		this.stage.getIcons()
 				.add(new Image(this.getClass().getResourceAsStream("/edu/neumont/csc150/sudoku/view/icon.png")));
+		Media media = null;
+		try {
+			media = new Media(
+					this.getClass().getResource("/edu/neumont/csc150/sudoku/view/village.mp3").toURI().toString());
+		} catch (URISyntaxException e) {
+		}
+		player = new MediaPlayer(media);
+		player.setCycleCount(MediaPlayer.INDEFINITE);
+		player.play();
 		showMainMenu();
 	}
 
@@ -155,10 +169,10 @@ public class SudokuViewController implements SudokuView {
 					}
 				};
 				controller.makeBoard(difficulty);
-				Platform.runLater(showGame);
 				synchronized (SudokuGameViewController.class) {
 					SudokuGameViewController.class.notifyAll();
 				}
+				Platform.runLater(showGame);
 			}
 		};
 		new Thread(task).start();
@@ -174,5 +188,13 @@ public class SudokuViewController implements SudokuView {
 
 	public void setDifficulty(Difficulty difficulty) {
 		this.difficulty = difficulty;
+	}
+
+	public MediaPlayer getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(MediaPlayer player) {
+		this.player = player;
 	}
 }

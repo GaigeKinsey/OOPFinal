@@ -2,6 +2,19 @@ BorderPane{
 	-fx-background-color: #ECE9E0;
 }
 
+Button{
+	-fx-background-color: #951f1f;
+	-fx-text-fill: white;
+	-fx-font-family: 'Last Ninja';
+	-fx-font-size: 15.0pt;
+	-fx-text-alignment: center;
+	-fx-padding: 20.0px 35.0px 20.0px 35.0px;
+}
+
+#muteButton{
+	-fx-min-width: 190px;
+}
+
 Label{
 	-fx-font-size: 20.0pt;
 	-fx-pref-width: 300.0px;

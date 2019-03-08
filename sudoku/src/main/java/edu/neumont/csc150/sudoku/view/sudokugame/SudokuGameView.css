@@ -3,30 +3,28 @@ BorderPane{
 }
 
 #timer {
+	-fx-padding: 10px 0px 0px 5px;
 	-fx-font-size: 15.0pt;
 	-fx-font-family: 'Last Ninja';
 	-fx-min-width: 225.0px;
 	-fx-max-width: 225.0px;
 }
 
+
 #prompt {
 	-fx-font-family: 'Last Ninja';
 	-fx-font-size: 25.0pt;
 }
 
-#statsBox {
-	-fx-alignment: top-center;
-}
-
-#giveup {
-	-fx-background-color: #951f1f;
-	-fx-text-fill: white;
-}
-
-VBox{
+#rightBox {
 	-fx-alignment: center;
-	-fx-padding: 0.0px 100.0px 0.0px 0.0px;
-	-fx-spacing: 75px;
+	-fx-spacing: 120px;
+}
+
+#statsBox{
+	-fx-alignment: center;
+	-fx-padding: 200px 100.0px 0.0px 0.0px;
+	-fx-spacing: 75.0px;
 }
 
 #notesButton{
@@ -35,10 +33,20 @@ VBox{
 }
 
 Button{
+	-fx-background-color: #951f1f;
+	-fx-text-fill: white;
 	-fx-font-family: 'Last Ninja';
 	-fx-font-size: 15.0pt;
 	-fx-text-alignment: center;
 	-fx-padding: 20.0px 35.0px 20.0px 35.0px;
+}
+
+#muteButton{
+	-fx-min-width: 190px;
+}
+
+#muteBox{
+	-fx-alignment: bottom-right;
 }
 
 .cell {

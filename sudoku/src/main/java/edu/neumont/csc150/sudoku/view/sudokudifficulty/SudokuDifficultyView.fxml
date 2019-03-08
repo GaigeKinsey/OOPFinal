@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Button?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="edu.neumont.csc150.sudoku.view.sudokudifficulty.SudokuDifficultyViewController"
@@ -20,6 +21,9 @@
 				<Label onMouseClicked="#onEasy" fx:id="easy"># Easy</Label>
 				<Label onMouseClicked="#onMedium" fx:id='medium'>+ Medium</Label>
 				<Label onMouseClicked="#onHard" fx:id='hard'>* Hard</Label>
+			</HBox>
+			<HBox fx:id="muteBox">
+				<Button fx:id="muteButton" onAction="#onMute">Mute</Button>
 			</HBox>
 		</VBox>
 	</center>

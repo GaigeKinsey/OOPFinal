@@ -16,7 +16,7 @@
 <?import javafx.scene.control.cell.CheckBoxListCell?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="edu.neumont.csc150.sudoku.view.sudokugame.SudokuGameViewController"
-	stylesheets="@SudokuGameView.css" fx:id="borderPane">
+	stylesheets="@SudokuGameView.css" onKeyPressed="#onKeyPressed">
 
 	<top>
 		<MenuBar>
@@ -30,24 +30,24 @@
 	</top>
 
 	<center>
-		<HBox>
+		<VBox fx:id="gameBox">
 			<GridPane fx:id="sudokuBoard"></GridPane>
-		</HBox>
+			<Label fx:id="timer">Time: 0:00</Label>
+		</VBox>
 	</center>
 
 	<right>
-		<HBox>
-			<VBox>
+		<VBox fx:id="rightBox">
+			<VBox fx:id="statsBox">
 				<Label fx:id="prompt">Solve the puzzle!</Label>
 				<Button fx:id="giveup" onAction="#onGiveUp">Give Up</Button>
 				<CheckBox fx:id="notesButton">Notes</CheckBox>
 			</VBox>
-		</HBox>
+			<HBox fx:id="muteBox">
+				<Button fx:id="muteButton" onAction="#onMute">Mute</Button>
+			</HBox>
+		</VBox>
 	</right>
-
-	<bottom>
-		<Label fx:id="timer">Time: 0:00</Label>
-	</bottom>
 
 </BorderPane>
 

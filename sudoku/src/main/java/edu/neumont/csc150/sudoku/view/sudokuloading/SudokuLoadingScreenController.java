@@ -20,6 +20,8 @@ public class SudokuLoadingScreenController {
 
 	public void init(SudokuController controller) {
 		this.controller = controller;
+		Image img = new Image("/edu/neumont/csc150/sudoku/view/sudokuloading/Loading.png");
+		image.setImage(img);	
 		Timeline boardsMade = new Timeline(new KeyFrame(Duration.millis(25), e -> boardCountDisplay()));
 		boardsMade.setCycleCount(Timeline.INDEFINITE);
 		boardsMade.play();
@@ -27,7 +29,5 @@ public class SudokuLoadingScreenController {
 
 	private void boardCountDisplay() {
 		this.boardCount.setText("Boards Made: " + controller.getBoardCount());
-		Image img = new Image("/edu/neumont/csc150/sudoku/view/sudokuloading/Loading.png");
-		image.setImage(img);	
 	}
 }

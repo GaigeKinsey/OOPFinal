@@ -6,22 +6,31 @@ import java.io.IOException;
 import edu.neumont.csc150.sudoku.controller.SudokuController;
 import edu.neumont.csc150.sudoku.view.SudokuViewController;
 import edu.neumont.csc150.sudoku.view.sudokugame.SudokuGameViewController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 
 public class SudokuMainMenuViewController {
 
-	SudokuViewController mainView;
-	SudokuController controller;
+	private SudokuViewController mainView;
+	private SudokuController controller;
+	private MediaPlayer player;
 
 	@FXML
 	private ImageView image;
+
+	@FXML
+	private Button muteButton;
 
 	public void onNewGame(MouseEvent e) throws IOException {
 		mainView.showDifficulty();
@@ -50,14 +59,34 @@ public class SudokuMainMenuViewController {
 		this.mainView.showGame();
 	}
 
+	public void onMute(ActionEvent e) {
+		if (this.player.isMute()) {
+			this.muteButton.setText("Mute");
+			this.player.setMute(false);
+			this.player.play();
+		} else {
+			this.muteButton.setText("+ Mute");
+			this.player.setMute(true);
+			this.player.pause();
+		}
+	}
+
 	public void onExit(MouseEvent e) {
 		mainView.shutdown();
 	}
 
 	public void init(SudokuViewController sudokuViewController, SudokuController controller) {
-		mainView = sudokuViewController;
-		this.controller = controller;;
+		this.mainView = sudokuViewController;
+		this.controller = controller;
+		this.player = sudokuViewController.getPlayer();
+
 		Image img = new Image("/edu/neumont/csc150/sudoku/view/sudokumainmenu/title.png");
 		image.setImage(img);
+		
+		if(player.isMute()) {
+			this.muteButton.setText("+ Mute");
+		} else {
+			this.muteButton.setText("Mute");
+		}
 	}
 }
