@@ -38,7 +38,8 @@
 	<right>
 		<HBox>
 			<VBox>
-				<Button onAction="#onGiveUp">Give Up</Button>
+				<Label fx:id="prompt">Solve the puzzle!</Label>
+				<Button fx:id="giveup" onAction="#onGiveUp">Give Up</Button>
 				<CheckBox fx:id="notesButton">Notes</CheckBox>
 			</VBox>
 		</HBox>

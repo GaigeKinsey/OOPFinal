@@ -1,3 +1,7 @@
+BorderPane{
+	-fx-background-color: #ECE9E0;
+}
+
 #timer {
 	-fx-font-size: 15.0pt;
 	-fx-font-family: 'Last Ninja';
@@ -5,18 +9,29 @@
 	-fx-max-width: 225.0px;
 }
 
+#prompt {
+	-fx-font-family: 'Last Ninja';
+	-fx-font-size: 25.0pt;
+}
+
 #statsBox {
 	-fx-alignment: top-center;
 }
 
+#giveup {
+	-fx-background-color: #951f1f;
+	-fx-text-fill: white;
+}
+
 VBox{
 	-fx-alignment: center;
-	-fx-padding: 0.0px 250.0px 0.0px 0.0px;
+	-fx-padding: 0.0px 100.0px 0.0px 0.0px;
+	-fx-spacing: 75px;
 }
 
 #notesButton{
 	-fx-font-family: 'Last Ninja';
-	-fx-font-size: 10.0pt;
+	-fx-font-size: 15.0pt;
 }
 
 Button{

@@ -1,3 +1,7 @@
+BorderPane{
+	-fx-background-color: #ECE9E0;
+}
+
 HBox{
 	-fx-alignment: center;
 }

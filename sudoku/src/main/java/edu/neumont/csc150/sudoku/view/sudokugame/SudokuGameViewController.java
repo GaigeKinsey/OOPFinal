@@ -214,7 +214,7 @@ public class SudokuGameViewController {
 			if (currentSquare.isHint()) {
 				label.setTextFill(Color.BLACK);
 			} else {
-				label.setTextFill(Color.LIGHTSEAGREEN);
+				label.setTextFill(Color.DEEPSKYBLUE);
 			}
 			if (currentSquare.isError()) {
 				label.setTextFill(Color.RED);

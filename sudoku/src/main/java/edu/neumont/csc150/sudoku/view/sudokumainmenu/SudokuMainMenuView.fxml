@@ -14,14 +14,6 @@
 	fx:controller="edu.neumont.csc150.sudoku.view.sudokumainmenu.SudokuMainMenuViewController"
 	stylesheets="@SudokuMainMenuView.css">
 	
-	<top>
-		<MenuBar>
-			<Menu text="Theme">
-				<CheckMenuItem text="DarkTheme"></CheckMenuItem>
-			</Menu>
-		</MenuBar>
-	</top>
-	
 	<center>
 	<VBox>
 		<ImageView fx:id="image"></ImageView>
