@@ -1,5 +1,6 @@
 package edu.neumont.csc150.sudoku.view.sudokugame;
 
+import java.awt.Checkbox;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
@@ -46,6 +48,12 @@ public class SudokuGameViewController {
 
 	@FXML
 	private CheckMenuItem notesButton;
+	
+	@FXML
+	private Checkbox notes;
+	
+	@FXML
+	private Button giveup;
 
 	public void onSave(ActionEvent e) {
 		boolean saved = false;
@@ -93,7 +101,7 @@ public class SudokuGameViewController {
 
 		if (!controller.getBoard().getSquares()[col][row].isHint()) {
 			cell.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
+				
 				@Override
 				public void handle(MouseEvent mouseEvent) {
 					cell.requestFocus();

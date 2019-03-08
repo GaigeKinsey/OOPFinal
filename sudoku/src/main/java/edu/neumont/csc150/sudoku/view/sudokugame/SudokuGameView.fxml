@@ -10,7 +10,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.CheckMenuItem?>
-
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.cell.CheckBoxListCell?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="edu.neumont.csc150.sudoku.view.sudokugame.SudokuGameViewController"
 	stylesheets="@SudokuGameView.css">
@@ -20,21 +23,30 @@
 			<Menu text="Game">
 				<MenuItem text="Save" onAction="#onSave"></MenuItem>
 				<MenuItem text="Clear Board" onAction="#onClear"></MenuItem>
-				<MenuItem text="New Puzzle" onAction="#onNewPuzzle"></MenuItem>	
+				<MenuItem text="New Puzzle" onAction="#onNewPuzzle"></MenuItem>
 				<MenuItem text="Main Menu" onAction="#onMainMenu"></MenuItem>
 			</Menu>
-			<Menu text ="Options">
+			<Menu text="Options">
 				<CheckMenuItem text="Notes" fx:id="notesButton"></CheckMenuItem>
 			</Menu>
 		</MenuBar>
 	</top>
-	
+
 	<center>
 		<HBox>
 			<GridPane fx:id="sudokuBoard"></GridPane>
 		</HBox>
 	</center>
-	
+
+	<right>
+		<HBox>
+			<VBox>
+				<Button fx:id="giveup">Give Up</Button>
+				<CheckBox fx:id="notes1">Notes</CheckBox>
+			</VBox>
+		</HBox>
+	</right>
+
 	<bottom>
 		<Label fx:id="timer">Time: 0:00</Label>
 	</bottom>
