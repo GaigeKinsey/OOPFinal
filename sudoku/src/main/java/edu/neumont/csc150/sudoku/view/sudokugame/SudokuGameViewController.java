@@ -48,10 +48,10 @@ public class SudokuGameViewController {
 
 	@FXML
 	private CheckMenuItem notesButton;
-	
+
 	@FXML
 	private Checkbox notes;
-	
+
 	@FXML
 	private Button giveup;
 
@@ -90,61 +90,65 @@ public class SudokuGameViewController {
 		mainView.showMainMenu();
 	}
 
+	private EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
+
+		@Override
+		public void handle(MouseEvent mouseEvent) {
+			PseudoClass selected = PseudoClass.getPseudoClass("selected");
+			Node cell = (Node) mouseEvent.getSource();
+			cell.requestFocus();
+			resetSelected();
+			cell.pseudoClassStateChanged(selected, true);
+			cell.setOnKeyPressed(keyHandler);
+		}
+	};
+
+	private EventHandler<KeyEvent> keyHandler = new EventHandler<KeyEvent>() {
+		@Override
+		public void handle(KeyEvent keyEvent) {
+			Node cell = (Node) keyEvent.getSource();
+			controller.getBoard().getSquare(Integer.parseInt(cell.getId().split("x")[0]),
+					Integer.parseInt(cell.getId().split("x")[1])).setModified(true);
+			if (notesButton.isSelected()) {
+				if (keyEvent.getCode().isDigitKey()) {
+					if (!keyEvent.getCode().getName().matches("0")) {
+						int index = Integer.parseInt(keyEvent.getCode().getName()) - 1;
+						Square currentSquare = controller.getBoard().getSquare(
+								Integer.parseInt(cell.getId().split("x")[0]),
+								Integer.parseInt(cell.getId().split("x")[1]));
+						boolean[] notes = currentSquare.getNotes();
+						notes[index] = !notes[index];
+						currentSquare.setNotes(notes);
+					}
+				}
+			} else {
+				if (keyEvent.getCode().isDigitKey()) {
+					Square currentSquare = controller.getBoard().getSquare(Integer.parseInt(cell.getId().split("x")[0]),
+							Integer.parseInt(cell.getId().split("x")[1]));
+					currentSquare.setValue(Integer.parseInt(keyEvent.getCode().getName()));
+				}
+				if (keyEvent.getCode() == KeyCode.BACK_SPACE) {
+					Square currentSquare = controller.getBoard().getSquare(Integer.parseInt(cell.getId().split("x")[0]),
+							Integer.parseInt(cell.getId().split("x")[1]));
+					currentSquare.setValue(0);
+				}
+				controller.getBoard().checkForErrors();
+			}
+			// Make new cell based on the values in the board
+			displayBoard();
+		}
+	};
+
 	public void formatCell(Node cell, int col, int row) {
 
 		PseudoClass right = PseudoClass.getPseudoClass("right");
 		PseudoClass bottom = PseudoClass.getPseudoClass("bottom");
-		PseudoClass selected = PseudoClass.getPseudoClass("selected");
 
 		cell.pseudoClassStateChanged(right, col == 2 || col == 5);
 		cell.pseudoClassStateChanged(bottom, row == 2 || row == 5);
 
 		if (!controller.getBoard().getSquares()[col][row].isHint()) {
-			cell.setOnMouseClicked(new EventHandler<MouseEvent>() {
-				
-				@Override
-				public void handle(MouseEvent mouseEvent) {
-					cell.requestFocus();
-					resetSelected();
-					cell.pseudoClassStateChanged(selected, true);
-
-					cell.setOnKeyPressed(new EventHandler<KeyEvent>() {
-						@Override
-						public void handle(KeyEvent keyEvent) {
-							controller.getBoard().getSquare(Integer.parseInt(cell.getId().split("x")[0]),
-									Integer.parseInt(cell.getId().split("x")[1])).setModified(true);
-							if (notesButton.isSelected()) {
-								if (keyEvent.getCode().isDigitKey()) {
-									if (!keyEvent.getCode().getName().matches("0")) {
-										int index = Integer.parseInt(keyEvent.getCode().getName()) - 1;
-										Square currentSquare = controller.getBoard().getSquare(
-												Integer.parseInt(cell.getId().split("x")[0]),
-												Integer.parseInt(cell.getId().split("x")[1]));
-										boolean[] notes = currentSquare.getNotes();
-										notes[index] = !notes[index];
-										currentSquare.setNotes(notes);
-									}
-								}
-							} else {
-								if (keyEvent.getCode().isDigitKey()) {
-									Square currentSquare = controller.getBoard().getSquare(Integer.parseInt(cell.getId().split("x")[0]),
-											Integer.parseInt(cell.getId().split("x")[1]));
-									currentSquare.setValue(Integer.parseInt(keyEvent.getCode().getName()));
-								}
-								if (keyEvent.getCode() == KeyCode.BACK_SPACE) {
-									Square currentSquare = controller.getBoard().getSquare(Integer.parseInt(cell.getId().split("x")[0]),
-											Integer.parseInt(cell.getId().split("x")[1]));
-									currentSquare.setValue(0);
-								}
-								controller.getBoard().checkForErrors();
-							}
-							// Make new cell based on the values in the board
-							displayBoard();
-						}
-
-					});
-				}
-			});
+			cell.setOnMouseClicked(mouseHandler);
 		}
 		cell.setId("" + col + "x" + row);
 
