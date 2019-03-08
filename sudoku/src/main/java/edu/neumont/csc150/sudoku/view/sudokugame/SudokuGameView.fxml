@@ -38,7 +38,7 @@
 	<right>
 		<HBox>
 			<VBox>
-				<Button fx:id="giveup">Give Up</Button>
+				<Button onAction="#onGiveUp">Give Up</Button>
 				<CheckBox fx:id="notesButton">Notes</CheckBox>
 			</VBox>
 		</HBox>

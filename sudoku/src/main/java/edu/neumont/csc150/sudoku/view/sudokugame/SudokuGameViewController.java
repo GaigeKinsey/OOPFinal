@@ -18,7 +18,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -40,7 +39,7 @@ public class SudokuGameViewController {
 
 	private Timeline timeCount;
 	private int time = 0;
-	
+
 	@FXML
 	private BorderPane borderPane;
 
@@ -52,9 +51,6 @@ public class SudokuGameViewController {
 
 	@FXML
 	private CheckBox notesButton;
-
-	@FXML
-	private Button giveup;
 
 	public void onSave(ActionEvent e) {
 		boolean saved = false;
@@ -256,6 +252,31 @@ public class SudokuGameViewController {
 		return gridPane;
 	}
 
+	public void onGiveUp(ActionEvent e) {
+		timeCount.stop();
+		Optional<ButtonType> answer = new Alert(AlertType.WARNING,
+				"Are you sure you would like to give up? This will prevent you from continuing the solve and show you the solution to the puzzle.", ButtonType.NO, ButtonType.YES).showAndWait();
+		
+		if (answer.isPresent()) {
+			if (answer.get().equals(ButtonType.YES)) {
+				int[][] squares = controller.getBoard().getSolvedBoard();
+				PseudoClass right = PseudoClass.getPseudoClass("right");
+				PseudoClass bottom = PseudoClass.getPseudoClass("bottom");
+				for (int col = 0; col < 9; col++) {
+					for (int row = 0; row < 9; row++) {
+						Label label = new Label("" + squares[col][row]);
+						label.getStyleClass().add("cell");
+						label.pseudoClassStateChanged(right, col == 2 || col == 5);
+						label.pseudoClassStateChanged(bottom, row == 2 || row == 5);
+						sudokuBoard.add(label, col, row);
+					}
+				}
+			} else {
+				timeCount.play();
+			}
+		}
+	}
+
 	private void timer() {
 		time++;
 		int milis = time % 10;
@@ -267,7 +288,7 @@ public class SudokuGameViewController {
 
 		timer.setText("Time: " + minutes + ":" + secondsString + "." + milis);
 	}
-	
+
 	public void init(SudokuViewController sudokuViewController, SudokuController controller) {
 		mainView = sudokuViewController;
 		this.controller = controller;
