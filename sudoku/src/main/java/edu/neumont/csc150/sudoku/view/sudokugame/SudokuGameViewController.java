@@ -104,9 +104,11 @@ public class SudokuGameViewController {
 	public void onKeyPressed(KeyEvent e) {
 		if (e.getCode().equals(KeyCode.M)) {
 			if (this.player.isMute()) {
+				muteButton.setText("Mute");
 				this.player.setMute(false);
 				this.player.play();
 			} else {
+				muteButton.setText("+ Mute");
 				this.player.setMute(true);
 				this.player.pause();
 			}
