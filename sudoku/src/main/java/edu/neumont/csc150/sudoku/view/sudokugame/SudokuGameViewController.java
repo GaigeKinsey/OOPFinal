@@ -176,6 +176,10 @@ public class SudokuGameViewController {
 			}
 			// Make new cell based on the values in the board
 			displayBoard();
+
+			if (controller.getBoard().checkForWin()) {
+				win();
+			}
 		}
 	};
 
@@ -193,10 +197,6 @@ public class SudokuGameViewController {
 		cell.setId("" + col + "x" + row);
 
 		this.cells.put(cell.getId(), cell);
-
-		if (controller.getBoard().checkForWin()) {
-			win();
-		}
 	}
 
 	private void resetSelected() {
@@ -211,10 +211,12 @@ public class SudokuGameViewController {
 	}
 
 	private void win() {
+		timeCount.stop();
+		String solveTime = timer.getText().split(": ")[1];
 		ButtonType newBoard = new ButtonType("New Board");
 		ButtonType mainMenu = new ButtonType("Main Menu");
 		Optional<ButtonType> winAlert = new Alert(AlertType.INFORMATION,
-				"You have won! Would you like to make another board of the same difficulty, or return to the main menu?",
+				"You have won with a time of " + solveTime + "! Would you like to make another board of the same difficulty, or return to the main menu?",
 				newBoard, mainMenu).showAndWait();
 		if (winAlert.isPresent()) {
 			if (winAlert.get().equals(newBoard)) {
